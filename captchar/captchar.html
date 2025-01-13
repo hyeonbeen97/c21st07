@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>ex</title>
+    <link rel="stylesheet" href="./captchar.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" class="canvas" width="100px" height="100px"></canvas>
+    <div id="btnBox" class="btnBox"> </div>
+    <div class="inputBox">
+        <input type="number" id="input" class="input">
+        <button id="rebtn" class="rebtn">리셋</button>
+        <button id="btn" class="btn">입력</button>
+    </div>
+
+    <script>
+        class Deck {
+            constructor(id) {
+                this.id = id;
+                this.storage = [];
+            }
+            push(item) { this.storage.push(item) }
+            shift() { return this.storage.shift() }
+        }
+        class Ta {
+            constructor(id) {
+                this.id = id
+                this.mypen = ""
+                this.captChar
+            }
+            canvas() {
+                const myPen = document.getElementById("canvas").getContext("2d")
+                this.myPen = myPen
+                let captChar = "";
+                for (let i = 0; i < 4; i++) {
+                    captChar += Math.ceil(Math.random() * 10) - 1
+                }
+                this.captChar = captChar
+                myPen.font = "30px Comic Sans MS";
+                myPen.fillStyle = "blue";
+                myPen.textAlign = "center";
+                myPen.fillText(captChar, canvas.width / 2, canvas.height / 2);
+            }
+            clear() {
+                this.myPen.clearRect(0, 0, 100, 100)
+            }
+
+            random() {
+                const que = new Deck("que")
+                for (let i = 0; i < 10; i++) {
+                    que.push(i)
+
+                }
+                let newA = []
+                const length = que.storage.length
+                for (let i = 0; i < length; i++) {
+
+                    for (let j = 0; j <= Math.random() * que.storage.length; j++) {
+                        que.push(que.shift())
+                    }
+                    newA.push(que.shift())
+                }
+                this.newA = newA
+            }
+            initButton() {
+                document.getElementById("btnBox").innerHTML = ''
+                document.getElementById("input").value = ""
+                this.random()
+                for (let i = 0; i < this.newA.length; i++) {
+                    document.getElementById("btnBox").innerHTML += `<button class="numbtn" id="numbtn${i}" value="${this.newA[i]}">${this.newA[i]}</button>`
+                }
+            }
+
+            capt() {
+
+                addEventListener("click", (e) => {
+                    const valueS = document.getElementById("input").value
+                    if (e.target.classList.contains("numbtn")) {
+                        const inV = e.target.value
+                        document.getElementById("input").value += inV
+                    }
+
+                    switch (e.target.id) {
+                        case "rebtn":
+                            this.clear()
+                            this.canvas()
+                            this.initButton()
+                            break
+                        case "btn":
+                            if (this.captChar === valueS) {
+                                alert("로봇이 아닙니다.")
+                            } else {
+                                alert("다시 입력하세요.")
+                                this.clear()
+                                this.canvas()
+                                this.initButton()
+
+                            }
+
+
+
+                    }
+
+
+                })
+
+
+            }
+            run() {
+                this.canvas()
+                this.random()
+                this.initButton()
+                this.capt()
+            }
+        }
+        const myta = new Ta("myta")
+        myta.run()
+    </script>
+</body>
+
+</html>

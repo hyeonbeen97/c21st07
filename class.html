@@ -1,0 +1,32 @@
+<script>
+
+    let a = [10, 30, 50, 70, 130]
+    let b = [20, 40, 160, 90, 110]
+    let c = []
+
+
+    while (true) {
+        let tempA = []
+        if (a.length != 0) {
+            tempA.push(a.shift())
+
+        }
+        if (b.length != 0) {
+
+            tempA.push(b.shift())
+        }
+        c.push(tempA)
+        if (a.length == 0 && b.length == 0) {
+            break
+        }
+    }
+
+    let maxV = c[0][0]
+    let maxIndex = 0
+    c.forEach((v, i, a) => {
+        if (v[0] > maxV) {
+            maxV = v[0]; maxIndex = i
+        }
+    })
+    console.log(c[maxIndex])
+</script>

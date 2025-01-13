@@ -1,0 +1,144 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  margin: 100px auto;
+  width: 1200px;
+  height: 800px;
+  background-color: #616bc7;
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.title {
+  text-align: center;
+}
+.title h2 {
+  color: rgb(193, 218, 240);
+  font-size: 30px;
+}
+
+.main {
+  margin-top: 20px;
+  width: 100%;
+  height: 523px;
+  border: 1px solid white;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 10px;
+  box-sizing: content-box;
+  overflow-y: scroll;
+}
+
+.mainHead {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.smallT {
+  height: 70px;
+  background-color: #484f92;
+  border-radius: 10px;
+  color: antiquewhite;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 70px;
+}
+
+#numH {
+  width: 100px;
+}
+
+#nameH {
+  width: 130px;
+}
+
+#phnumH {
+  width: 380px;
+}
+
+#adsH {
+  width: 450px;
+}
+
+#addle {
+  width: 90px;
+  font-size: 15px;
+}
+
+.list {
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+}
+
+.num {
+  width: 100px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  -moz-text-align-last: center;
+       text-align-last: center;
+  line-height: 70px;
+}
+
+.name {
+  width: 130px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  -moz-text-align-last: center;
+       text-align-last: center;
+  line-height: 70px;
+}
+
+.phone {
+  width: 380px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  -moz-text-align-last: center;
+       text-align-last: center;
+  line-height: 70px;
+}
+
+.adress {
+  width: 450px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  word-break: break-all;
+  -moz-text-align-last: center;
+       text-align-last: center;
+  line-height: 70px;
+}
+
+.btnBox {
+  width: 90px;
+  font-size: 15px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 70px;
+}
+
+.add {
+  text-align: center;
+  width: 1000px;
+  margin: auto;
+  margin-top: 50px;
+  color: #fff;
+  height: 40px;
+}
+.add input {
+  height: 30px;
+}
+
+.okBtn {
+  width: 60px;
+  height: 40px;
+  border-radius: 10px;
+}/*# sourceMappingURL=phbook.css.map */

@@ -1,0 +1,66 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.canvas {
+  border: 1px solid black;
+  margin-left: 48px;
+}
+
+.btnBox {
+  width: 200px;
+  height: 200px;
+}
+.btnBox .numbtn {
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: 0.1px solid white;
+  border-radius: 5px;
+  width: 33.3333333333%;
+  height: 50px;
+  font-size: 20px;
+}
+.btnBox :active {
+  background-color: #0b59ad;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.inputBox {
+  display: inline-flex;
+}
+.inputBox .rebtn {
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: 0.1px solid white;
+  border-radius: 5px;
+  width: 132px;
+  height: 49px;
+  position: absolute;
+  top: 257px;
+  left: 67.5px;
+}
+.inputBox :active {
+  background-color: #0b59ad;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+.inputBox .input {
+  font-size: 20px;
+  width: 148px;
+  height: 30px;
+}
+.inputBox .btn {
+  font-weight: bold;
+  color: #fff;
+  background-color: #007bff;
+  border: 0.1px solid white;
+  border-radius: 5px;
+  width: 50px;
+  border-radius: 5px;
+}
+.inputBox :active {
+  background-color: #0b59ad;
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}/*# sourceMappingURL=captchar.css.map */

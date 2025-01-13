@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>1~100 정수</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Noto Sans KR", serif;
+        }
+
+        #allArea {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .canvasArea {
+            border-radius: 10px;
+            margin: 0 auto;
+            margin-top: 100px;
+            background-color: #007cc4;
+
+            width: 1000px;
+            height: 300px;
+            padding: 10px;
+        }
+
+        .canvas {
+
+            text-align: left;
+            font-size: 20px;
+        }
+
+        .box {
+            margin-left: 30px;
+        }
+
+        .resultA {
+            width: 600px;
+            height: 100px;
+            word-break: break-all;
+            margin-left: -200px;
+
+        }
+
+        #resultA {
+            word-break: break-all;
+        }
+
+        .resultBox {
+            text-align: center;
+            width: 200px;
+            height: 300px;
+            margin: 50px auto;
+        }
+
+        .ib {
+            font-weight: bold;
+            margin-top: 10px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="allArea" class="allArea">
+        <div class="canvasArea">
+            <canvas id="canvas" class="canvas" width="1000" height="300">
+
+            </canvas>
+        </div>
+        <div class=" resultBox">
+            <div id="resultA" class="resultA">
+                <p id="resultAp"></p>
+            </div>
+            <div class="ib" class="box">
+                <p id="av">0</p>
+            </div>
+            <div class="ib" class="box">
+                <p id="mid">0</p>
+            </div>
+            <div class="ib" class="box">
+                <p id="max">0</p>
+            </div>
+            <div class="ib" class="box">
+                <p id="min">0</p>
+            </div>
+            <div class="ib">
+                <p id="stdde">0</p>
+            </div>
+            <div class="ib">
+                <p id="mode">0</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        class Fibo {
+            constructor(id) {
+                this.id = id;
+                this.sum = 0
+                this.mid = []
+                this.min = 0
+                this.max = 0
+                this.modes = 0
+                this.sortA = []
+                this.array = []
+                this.sqrt = 0
+            }
+            canvasInit() {
+                const canvas = document.getElementById("canvas")
+                const myPen = canvas.getContext("2d")
+                const scaleFactor = 10;
+
+                for (let i = 0; i < 1000; i++) {
+                    myPen.fillRect(i, 298, 2, 2)
+                    myPen.fillRect(0, i, 2, 2)
+
+
+                }
+                for (let s = 0; s < 1000; s += scaleFactor) {
+                    myPen.fillRect(s, 290, 1, 10)
+                    myPen.fillRect(0, s, 10, 1)
+                }
+                console.log(this.sortA)
+                for (let x = 0; x < this.sortA.length; x++) {
+                    let yL = this.sortA[x]
+                    myPen.fillRect((x * scaleFactor) + 10, (yL * - 1) + 200, 2, 2)
+                }
+
+            }
+
+
+            numberOne() {
+                let sum = 0
+                let numArray = []
+                for (let i = 0; i < 100; i++) {
+                    let numbb = Math.floor(Math.random() * 101)
+                    sum += numbb
+                    numArray.push(numbb)
+                }
+
+                this.array = numArray
+                this.sum = sum
+
+            }
+            getMinMax() {
+                this.min = Math.min(...this.array)
+                this.max = Math.max(...this.array)
+
+            }
+            midIndex() {
+                /*let temp = 0;   //bubblesort
+                for (let i = 0; i < this.array.length - 1; i++) {
+                    for (let j = 0; j < this.array.length - 1 - i; j++) {
+                        if (this.array[j] > this.array[j + 1]) {
+                            temp = this.array[j];
+                            this.array[j] = this.array[j + 1];
+                            this.array[j + 1] = temp;
+                        }
+                    }
+
+                    let sortA = this.array
+
+                    let median = 0
+                    if (sortA.length % 2 === 0) {
+                        const targetIndex = sortA.length / 2
+                        median = (sortA[targetIndex - 1] + sortA[targetIndex]) / 2
+
+
+                    } else {
+                        median = sortA[Math.floor(sortA.length / 2)]
+                    }
+                    this.sortA = sortA
+                    this.mid = median
+
+                }*/
+                for (let i = 0; i < this.array.length; i++) {
+                    let minIdex = i
+                    for (let j = i; j < this.array.length; j++) {
+                        if (this.array[minIdex] > this.array[j]) {
+                            minIdex = j
+                        }
+                    }
+                    let temp = this.array[i]
+                    this.array[i] = this.array[minIdex]
+                    this.array[minIdex] = temp
+
+                    console.log(this.array)
+
+                }
+            }
+            mode() {
+                const modeA = [];
+                let count = 0;
+                let modes = [];
+
+                this.sortA.forEach(v => {
+                    modeA[v] = (modeA[v] || 0) + 1;
+                    if (modeA[v] > count) {
+                        count = modeA[v];
+                    }
+                });
+
+                for (let v in modeA) {
+                    if (modeA[v] === count) {
+                        modes.push(Number(v));
+                    }
+                }
+
+                this.modes = modes;
+            }
+            stdde() {
+                let avg = this.sum / this.array.length
+                let deviations = []
+                let deviationsSqrt = 0
+                let sumDev = 0
+                this.sortA.forEach((v, i, a) => {
+                    deviations.push(v - avg)
+
+                })
+
+                deviations.forEach(v1 => {
+                    sumDev += (v1 ** 2)
+                })
+                deviationsSqrt = sumDev / deviations.length
+                this.sqrt = Math.sqrt(deviationsSqrt)
+            }
+
+            render() {
+                document.getElementById("resultAp").innerHTML = `${this.array}`
+                document.getElementById("av").innerHTML = `평균 : ${(this.sum / this.array.length)}`
+                document.getElementById("mid").innerHTML = `중앙 : ${(this.mid)}`
+                document.getElementById("max").innerHTML = `최대 값 : ${this.max}`
+                document.getElementById("min").innerHTML = `최소 값 : ${this.min}`
+                document.getElementById("stdde").innerHTML = `표준편차 : ${this.sqrt}`
+                document.getElementById("mode").innerHTML = `모드 값 : ${this.modes}`
+
+            }
+
+            run() {
+
+                this.numberOne()
+                this.getMinMax()
+                this.midIndex()
+                this.mode()
+                this.stdde()
+                this.canvasInit()
+                this.render()
+
+            }
+        }
+
+        const myFibo = new Fibo("allArea");
+        myFibo.run();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>캔버스</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-size: 10px;
+        }
+
+        .myCanVas {
+            border: 1px solid red
+        }
+    </style>
+</head>
+
+<body>
+    <div id="allArea">
+        <canvas id="myCanvas" class="myCanVas" width="800" height="800"></canvas>
+    </div>
+    <script>
+        class Canvas {
+            constructor(id) {
+                this.id = id;
+                this.myPen = null;
+                this.scaleFactor = 20; // 확대 비율
+                this.dotCollection = [
+                    {
+                        dot: { x: -20, y: 50 }
+                    },
+                    {
+                        line: [
+                            { x: -9, y: -10 },
+                            { x: 12, y: -15 }
+                        ]
+                    },
+                    {
+                        triangle: [
+                            { x: 5, y: 8 },
+                            { x: -8, y: 0 },
+                            { x: 10, y: -10 }
+                        ]
+                    },
+                    {
+                        rectangle: [
+                            { x: -8, y: -10 },
+                            { x: -8, y: 10 },
+                            { x: 8, y: 10 },
+                            { x: 8, y: -10 }
+                        ]
+                    },
+                    {
+                        circle: { r: 9, a: -8, b: 10 }
+                    }
+                ];
+            }
+
+            init() {
+                const canvas = document.getElementById(this.id);
+                this.myPen = canvas.getContext("2d");
+                const offset = 400;
+
+                // 좌표 축 그리기
+                for (let i = 0; i < 800; i++) {
+                    this.myPen.fillRect(i, offset, 1, 1); // x축
+                    this.myPen.fillRect(offset, i, 1, 1); // y축
+                }
+
+                // 눈금 표시
+                for (let s = 0; s <= 800; s += this.scaleFactor) {
+                    this.myPen.fillRect(offset + s, offset - 5, 1, 10);
+                    this.myPen.fillRect(offset - s, offset - 5, 1, 10);
+                    this.myPen.fillRect(offset - 5, offset + s, 10, 1);
+                    this.myPen.fillRect(offset - 5, offset - s, 10, 1);
+                }
+            }
+
+            // dotCollection점 그리기
+            plotDot() {
+                const dx = ((this.dotCollection[0]["dot"].x) + 400)
+                const dy = (- (this.dotCollection[0]["dot"].y) + 400)
+
+                this.myPen.fillRect(dx, dy, 5, 5);
+            }
+
+            // dotCollection선 그리기
+            plotLine() {
+                const Dline = this.dotCollection[1]['line']
+                const x1 = Dline[0].x
+                const x1 = Dline[0].x
+                const x1 = Dline[0].x
+                const x1 = Dline[0].xy
+                console.log(x1)
+            }
+
+            // 원 그리기
+            plotCircle() {
+
+            }
+
+            run() {
+                this.init();
+                this.plotDot()
+                this.plotLine()
+            }
+        }
+
+        const myCanvas = new Canvas("myCanvas");
+        myCanvas.run();
+    </script>
+</body>
+
+</html>

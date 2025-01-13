@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            width: 1000px;
+            height: 100px;
+            text-align: center;
+            margin: 100px auto;
+            font-weight: bold;
+        }
+
+        .canvasArea {
+            margin: auto;
+            width: 1500px;
+            height: 400px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .kor {
+            text-align: center;
+            width: calc(100%/3);
+        }
+
+        .math {
+            text-align: center;
+            width: calc(100%/3);
+        }
+
+        .eng {
+            text-align: center;
+            width: calc(100%/3);
+        }
+
+        .canvas {
+            margin-top: 20px;
+            border: 1px solid rgb(207, 207, 207);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="Area">
+
+
+    </div>
+    <script>
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                const iflist = JSON.parse(this.responseText);
+
+                // NodesClass 인스턴스 생성 및 데이터 전달
+                const myAp = new NodesClass("myAp", iflist);
+                myAp.run();
+            }
+        };
+
+        xhttp.open("GET", "json.json", true);
+        xhttp.send();
+
+
+        class NodesClass {
+            constructor(id, data) {
+                this.id = id
+                this.classNumber = data.classNumber
+                this.className = data.className
+                this.numName1 = ''
+                this.numName2 = ''
+                this.numName3 = ''
+            }
+
+
+            inithtml() {
+                const html = `
+                <h1 id="title">${this.classNumber} ${this.className}</h1>
+                <div class="canvasArea" id="canvasArea">
+                    <div id="kor" class="kor">
+                        <h3>국어</h3>
+                        <canvas id="korcanvas" class="canvas" width="400px" height="250"></canvas>
+                        <p id="korrank1">1등:${this.numName1} <br> 2등:${this.numName2} <br>3등:${this.numName3} <br></p>
+                    </div>
+                    <div id="math" class="math">
+                        <h3>수학</h3>
+                        <canvas id="mathcanvas" class="canvas" width="400px" height="250"></canvas>
+                        <p id="mathrank1">1등:${this.numName1} <br> 2등:${this.numName2} <br>3등:${this.numName3} <br></p>
+
+                    </div>
+                    <div id="eng" class="eng">
+                        <h3>영어</h3>
+                        <canvas id="engcanvas" class="canvas" width="400px" height="250"></canvas>
+                        <p id="engrank1">1등:${this.numName1} <br> 2등:${this.numName2} <br>3등:${this.numName3} <br></p>
+
+                    </div>
+                </div>
+
+                `
+                document.getElementById("Area").innerHTML = html
+            }
+            canvas() {
+
+            }
+
+
+            run() {
+                this.inithtml()
+                this.canvas()
+
+            }
+        }
+
+    </script>
+</body>
+
+</html>

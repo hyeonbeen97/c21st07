@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<title>무제-1</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .allArea {
+        display: flex;
+    }
+
+    .canvas {
+        border: 2px solid black;
+    }
+
+    .resultBox {
+        display: block;
+        flex-wrap: wrap;
+    }
+</style>
+
+<body>
+    <div id="allArea" class=" allArea">
+        <canvas id="canvas" class="canvas" width="200px" height="200px"></canvas>
+        <div>
+            <input id="input" type="text">
+            <select id="select">
+                <option value="degree">각도</option>
+                <option value="radian">라디안</option>
+                <option value="mill">밀</option>
+            </select>
+            <button id="drbtn">변환</button>
+
+        </div>
+    </div>
+    <div class="resultBox">
+        <p id="drResult">0</p>
+        <p id="raResult">0</p>
+        <p id="milResult">0</p>
+    </div>
+
+    <script>
+        class A {
+            constructor(id) {
+                this.id = id
+                this.drgree = 0
+                this.radian = 0
+                this.mill = 0
+                this.myPen
+            }
+            init() {
+
+                addEventListener("click", (e) => {
+                    const V = document.getElementById("input").value
+                    const sldrgree = document.getElementById("select").value
+                    switch (e.target.id) {
+
+                        case "drbtn":
+                            if (sldrgree === "degree") {
+                                this.drgree = V
+                                document.getElementById("drResult").innerHTML = `${this.drgree}도`
+                                this.radian = V * (Math.PI / 180)
+                                document.getElementById("raResult").innerHTML = `${this.radian}라디안`
+                                this.mill = V * (Math.PI / 180) * 1000
+                                document.getElementById("milResult").innerHTML = `${this.mill}밀리라디안`
+                            } else if (sldrgree === "radian") {
+                                this.drgree = V * (180 / Math.PI)
+                                document.getElementById("drResult").innerHTML = `${this.drgree}도`
+                                this.radian = V
+                                document.getElementById("raResult").innerHTML = `${this.radian}라디안`
+                                this.mill = V * 1000
+                                document.getElementById("milResult").innerHTML = `${this.mill} 밀리라디안`
+                            } else if (sldrgree === "mill") {
+                                this.drgree = V * (180 / Math.PI) / 1000
+                                document.getElementById("drResult").innerHTML = `${this.drgree}도`
+                                this.radian = V / 1000
+                                document.getElementById("raResult").innerHTML = `${this.radian}라디안`
+                                this.mill = V
+                                document.getElementById("milResult").innerHTML = `${this.mill}밀리라디안`
+                                break
+                            }
+                            this.plotDot()
+                    }
+                })
+            }
+            canvas() {
+                const myCanVas = document.getElementById("canvas")
+                const myPen = myCanVas.getContext("2d")
+                this.myPen = myPen
+                for (let i = 0; i < 200; i++) {
+                    myPen.fillRect(100, i, 1, 1)
+                    myPen.fillRect(i, 100, 1, 1)
+                }
+
+
+            }
+            plotDot() {
+                let x = Math.cos(this.drgree)
+                let y = Math.sin(this.drgree)
+                this.myPen.fillRect(x * 70 + 100, -y * 70 + 100, 2, 2)
+            }
+
+            run() {
+                this.init()
+                this.canvas()
+
+            }
+
+        }
+        const myA = new A("myA")
+        myA.run()
+    </script>
+</body>
+
+</html>

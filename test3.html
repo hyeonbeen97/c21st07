@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title> palindrom</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #allArea {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #hun {
+            width: 500px;
+            height: 100px;
+        }
+
+        .box {
+            margin-left: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="allArea" class="allArea">
+        <div id="inputArea">
+            <input type="text" id="plIut" class="plIut">
+            <button id="btn">입력하기</button>
+        </div>
+        <div id="resultArea">
+            <p id="pali">기러기는 거꾸로해도 기러기</p>
+        </div>
+
+
+    </div>
+    <script>
+        class Palindrom {
+            constructor(id) {
+                this.id = id;
+                this.storage = []
+                this.content = ""
+                this.reverseContent = ""
+            }
+
+
+            inputContent() {
+                addEventListener('click', (e) => {
+                    switch (e.target.id) {
+                        case "btn":
+                            this.content = document.getElementById("plIut").value
+                            this.bunhaeStack()
+                            this.compareContent()
+                            break;
+
+                    }
+                })
+
+
+            }
+            bunhaeStack() {
+
+                for (let i = 0; i < this.content.length; i++) {
+                    this.pushItem(this.content[i])
+                }
+                for (let i = 0; i < this.content.length; i++) {
+                    this.reverseContent += this.popItem()
+                }
+
+            }
+            pushItem(item) { this.storage.push(item); }
+            popItem() { return this.storage.pop(); }
+
+            compareContent() {
+                if (this.content == this.reverseContent) {
+                    document.getElementById("pali").innerText = `${this.content} = ${this.reverseContent} 👌 "Palindrom"`
+                } else {
+                    document.getElementById("pali").innerText = `${this.content} = ${this.reverseContent} ❌ "No Palindrom"`
+                }
+            }
+            run() {
+                this.inputContent()
+            }
+        }
+
+        const myPalindrom = new Palindrom("myPalindrom");
+        myPalindrom.run();
+    </script>
+</body>
+
+</html>

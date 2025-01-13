@@ -1,0 +1,132 @@
+<!DOCTYPE html> 학습 시계
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>시계</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .can vas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" class="canvas" width="800px" height="800px"></canvas>
+    <script>
+        class Clock {
+            constructor(id) {
+                this.id = id
+                this.width = document.getElementById("canvas").clientWidth
+                this.heigth = document.getElementById("canvas").clientHeight
+                this.r = 300
+                this.radian = Math.PI / 180
+                this.angle = -90
+            }
+            canvas() {
+                const myPen = document.getElementById("canvas").getContext("2d")
+                this.myPen = myPen
+
+
+                /*for(let i=0 ;i<this.width;i++){
+                    myPen.fillRect(i,this.width/2,1,1)
+                    myPen.fillRect(this.width/2,i,1,1)
+                }*/
+
+            }
+            clearline() {
+                this.myPen.clearRect(0, 0, 800, 800)
+                this.circle()
+                this.hourDot()
+
+            }
+            circle() {
+                let hafwidth = this.width / 2
+                let hafheight = this.heigth / 2
+                this.myPen.lineWidth = 8
+                this.myPen.beginPath()
+                this.myPen.arc(400, 400, 300, 0, 2 * Math.PI)
+                this.myPen.stroke()
+
+                this.myPen.lineWidth = 15
+                this.myPen.beginPath()
+                this.myPen.arc(402, 400, 1, 0, 2 * Math.PI)
+                this.myPen.stroke()
+
+
+                /*for (let i = -360; i < 360; i++) {
+                    let y = Math.sqrt(this.r ** 2 + (-1 * i ** 2))
+                    this.myPen.fillRect(i + hafwidth, -y + hafheight, 1, 1)
+                    this.myPen.fillRect(i + hafwidth, y + hafheight, 1, 1)
+
+                }*/
+            }
+
+            hourDot() {
+                for (let i = this.angle; i <= 240; i += 30) {
+                    for (let j = 0; j < 20; j++) {
+                        this.myPen.fillRect(Math.floor(this.r - j) * Math.cos(i * this.radian) + 400, Math.floor(this.r - j) * Math.sin(i * this.radian) + 400, 2, 2)
+                    }
+                }
+                for (let i = this.angle; i <= 270; i += 6) {
+                    for (let j = 0; j < 10; j++) {
+                        this.myPen.fillRect(Math.floor(this.r - j) * Math.cos(i * this.radian) + 400, Math.floor(this.r - j) * Math.sin(i * this.radian) + 400, 1, 1)
+                    }
+                }
+            }
+            hourLine() {
+                const datehour = new Date()
+                let hour = datehour.getHours() > 12 ? datehour.getHours() - 12 : datehour.getHours()
+                for (let j = 160; j < 300; j++) {
+                    this.myPen.fillRect(Math.floor((this.r - j) * Math.cos((this.angle + hour * 30) * this.radian)) + 400, Math.floor((this.r - j) * Math.sin((this.angle + hour * 30) * this.radian)) + 400, 5, 5);
+                }
+            }
+            minLine() {
+                const dateminute = new Date()
+                let minute = dateminute.getMinutes()
+                for (let j = 70; j < 300; j++) {
+                    this.myPen.fillRect(Math.floor((this.r - j) * Math.cos((this.angle + minute * 6) * this.radian)) + 400, Math.floor((this.r - j) * Math.sin((this.angle + minute * 6) * this.radian)) + 400, 3, 3);
+                }
+
+            }
+            secondLine() {
+                const datesecond = new Date()
+                let second = datesecond.getSeconds()
+                for (let j = 40; j < 300; j++) {
+
+                    this.myPen.fillRect(Math.floor((this.r - j) * Math.cos((this.angle + (second) * 6) * this.radian)) + 400, Math.floor((this.r - j) * Math.sin((this.angle + second * 6) * this.radian)) + 400, 1, 1);
+                }
+            }
+            interval() {
+                setInterval(() => {
+                    this.clearline()
+                    this.secondLine()
+                    this.minLine()
+                    this.hourLine()
+
+                }, 1000)
+
+            }
+
+
+            run() {
+                this.canvas()
+                this.circle()
+                this.hourDot()
+                this.hourLine()
+                this.minLine()
+                this.secondLine()
+                this.interval()
+            }
+        }
+        const myClock = new Clock("myClock")
+        myClock.run()
+    </script>
+</body>
+
+</html>

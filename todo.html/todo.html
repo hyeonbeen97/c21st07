@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>TodoList</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .todoListArea {
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .todolist {
+            width: 400px;
+            box-shadow: 3px 3px 3px darkgray;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .todolist>h1 {
+            font-size: 25px;
+            margin-bottom: 20px;
+        }
+
+        .listBox {
+            width: 100%;
+            flex: 1;
+            overflow-y: auto;
+            max-height: 200px;
+        }
+
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .number {
+            width: 30px;
+            text-align: center;
+        }
+
+        .tdlist {
+            flex: 1;
+            padding-left: 10px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .clearB,
+        .deleteB {
+            width: 50px;
+            font-size: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .clearB {
+            background-color: blue;
+        }
+
+        .deleteB {
+            background-color: red;
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="todoListArea"></div>
+    <script>
+        class Todolist {
+            constructor(id) {
+                this.id = id;
+                this.todoItems = [
+                    { id: 1, content: 'HTML', completed: false },
+                    { id: 2, content: 'CSS', completed: false },
+                    { id: 3, content: 'JavaScript', completed: false },
+                    { id: 4, content: 'JavaScript', completed: false },
+
+                ];
+            }
+
+            init() {
+                const html = `
+                    <div id="todolist" class="todolist">
+                        <h1>오늘의 할 일</h1>
+                        <div id="listBox" class="listBox"></div>
+                    </div>
+                `;
+                document.getElementById('todoListArea').innerHTML = html;
+            }
+
+            renderList() {
+                const listContainer = document.getElementById('listBox');
+                listContainer.innerHTML = "";
+
+                this.todoItems.forEach(item => {
+                    const itemHtml = `
+                        <div class="list-item">
+                            <span class="number">${item.id}</span>
+                            <span class="tdlist">${item.content}</span>
+                            <button class="clearB">${item.completed ? '완료됨' : '완료'}</button>
+                            <button class="deleteB">삭제</button>
+                        </div>
+                    `;
+                    listContainer.innerHTML += itemHtml;
+                });
+
+                this.attachEventHandlers();
+            }
+
+            attachEventHandlers() {
+                const clearButtons = document.querySelectorAll('.clearB');
+                const deleteButtons = document.querySelectorAll('.deleteB');
+
+                clearButtons.forEach((btn, index) => {
+                    btn.addEventListener('click', () => {
+                        this.toggleComplete(index);
+                        const deleteButtons = document.querySelectorAll('.deleteB');
+
+                        deleteButtons[index].style.visibility = 'visible';
+
+                    });
+                });
+
+                deleteButtons.forEach((btn, index) => {
+                    btn.addEventListener('click', () => this.deleteItem(index));
+                });
+            }
+
+            toggleComplete(index) {
+                this.todoItems[index].completed = !this.todoItems[index].completed;
+                this.renderList();
+            }
+
+            deleteItem(index) {
+                this.todoItems.splice(index, 1);
+                this.renderList();
+            }
+
+            run() {
+                this.init();
+                this.renderList();
+            }
+        }
+
+        const myTodoList = new Todolist("myTodoList");
+        myTodoList.run();
+    </script>
+</body>
+
+</html>

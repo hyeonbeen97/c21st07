@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="./drag.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div id="allArea">
+        <div id="container" class="container">
+            <div id="numberBox" class="numberBox">
+                <div draggable="true" id="0" class="num" value="0">0</div>
+                <div draggable="true" id="1" class="num" value="1">1</div>
+                <div draggable="true" id="2" class="num" value="2">2</div>
+                <div draggable="true" id="3" class="num" value="3">3</div>
+                <div draggable="true" id="4" class="num" value="4">4</div>
+                <div draggable="true" id="5" class="num" value="5">5</div>
+                <div draggable="true" id="6" class="num" value="6">6</div>
+                <div draggable="true" id="7" class="num" value="7">7</div>
+                <div draggable="true" id="8" class="num" value="8">8</div>
+                <div draggable="true" id="9" class="num" value="9">9</div>
+            </div>
+            <div id="sumBox" class="sumBox">
+                <div id="dragNum1" class="dragNum"></div>
+                <p>+</p>
+                <div id="dragNum2" class="dragNum"></div>
+                <button id="sumBtn" class="sumBtn">=</button>
+                <p id="result">0</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        class SumDrag {
+            constructor(id) {
+                this.id = id
+                this.dargV1 = 0
+                this.dragV2 = 0
+            }
+            drag() {
+
+                addEventListener("dragenter", (e) => {
+
+                    switch (e.target.id) {
+                        case "dragNum1":
+                            alert("e")
+                            e.preventDefault()
+                            break;
+                    }
+                })
+
+
+            }
+            run() {
+                this.drag()
+            }
+        }
+
+        const sum = new SumDrag("sum")
+        sum.run()
+    </script>
+</body>
+
+</html>

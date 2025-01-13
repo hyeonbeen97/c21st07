@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans+KR:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <title>loggraph</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Nanum Gothic", serif;
+            font-weight: 100;
+            font-style: normal;
+        }
+
+
+
+        .canvas {
+            margin: 20px 50px;
+            border: 1px solid rgb(207, 205, 205);
+            font-family: "Nanum Gothic", serif;
+            font-weight: 400;
+        }
+
+        #input {
+            margin-left: 50px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <canvas id="canvas1" class="canvas" width="500" height="500"></canvas>
+    <canvas id="canvas2" class="canvas" width="500" height="500"></canvas>
+    <canvas id="canvas3" class="canvas" width="500" height="500"></canvas>
+    <input type="number" id="input">
+    <button id="inBtb">입력</button>
+    <script>
+        class Canvas {
+            constructor(id) {
+                this.id = id
+                this.scale = 50
+                this.inlogV = 3
+
+            }
+            init() {
+                const myPen = document.getElementById("canvas1").getContext("2d")
+                const myPen2 = document.getElementById("canvas2").getContext("2d")
+                const myPen3 = document.getElementById("canvas3").getContext("2d")
+                this.myPen1 = myPen
+                this.myPen2 = myPen2
+                this.myPen3 = myPen3
+                //기준선 그리기
+                for (let i = 0; i < 500; i++) {
+                    myPen.fillRect(i + 30, 470, 1, 1)
+                    myPen.fillRect(30, i - 30, 1, 1)
+                    myPen2.fillRect(i + 30, 470, 1, 1)
+                    myPen2.fillRect(30, i - 30, 1, 1)
+                    myPen3.fillRect(i + 30, 470, 1, 1)
+                    myPen3.fillRect(30, i - 30, 1, 1)
+
+                }
+                //눈금그리기
+                for (let i = 0; i < 500; i += this.scale) {
+                    myPen.fillRect(i + 30, 465, 1, 5)
+                    myPen.fillRect(30, -i + 470, 5, 1)
+                    myPen2.fillRect(i + 30, 465, 1, 5)
+                    myPen2.fillRect(30, -i + 470, 5, 1)
+                    myPen3.fillRect(i + 30, 465, 1, 5)
+                    myPen3.fillRect(30, -i + 470, 5, 1)
+
+
+                    for (let k = 0; k < 500; k += 0.1) {
+                        myPen.fillRect(i + 30, k - 30, 0.1, 0.1)
+                        myPen.fillRect(k + 30, -i + 470, 0.1, 0.1)
+                        myPen2.fillRect(i + 30, k - 30, 0.1, 0.1)
+                        myPen2.fillRect(k + 30, -i + 470, 0.1, 0.1)
+                        myPen3.fillRect(i + 30, k - 30, 0.1, 0.1)
+                        myPen3.fillRect(k + 30, -i + 470, 0.1, 0.1)
+
+                    }
+                }
+                //숫자
+                for (let i = 0; i < 500; i++) {
+                    let inY = this.inlogV ** i
+
+                    myPen.strokeText(`${100 * i}`, 7, `${-i}` * this.scale + 470)
+                    myPen.strokeText(`${i}`, i * this.scale + 30, 480)
+
+                    myPen2.strokeText(`${i}`, 9, `${-i}` * this.scale + 460)
+                    myPen2.font = "7px Arial"
+
+                    myPen2.strokeText(`${i}`, i * this.scale + 30, 480)
+                    myPen2.font = "12px Arial"
+
+                    myPen3.strokeText(`${this.inlogV} = ${inY} `, 4, `${-i}` * this.scale + 470)
+                    myPen3.strokeText(`${i}`, 9, `${-i}` * this.scale + 460)
+                    myPen3.font = "7px Arial"
+                    myPen3.strokeText(`${i}`, i * this.scale + 30, 480)
+                    myPen3.font = "12px Arial"
+
+
+                }
+
+
+                //캔버스1
+                for (let x = 0; x < 500; x += 0.01) {
+                    const y = Math.pow(2, x)
+                    myPen.fillRect((x * this.scale + 30), (-y * this.scale) / 100 + 470, 1, 1)
+
+                }
+                //캔버스2
+                for (let x = 0; x < 500; x += 0.01) {
+                    const y = Math.pow(2, x)
+                    const logy = Math.log2(y)
+                    myPen2.fillRect((x * this.scale + 30), (-logy * this.scale) + 470, 1, 1)
+                }
+                //캔버스3
+                for (let x = 0; x < 500; x += 0.01) {
+                    const y = Math.pow(2, x)
+                    const logy = Math.log(y) / Math.log(`${this.inlogV}`)
+                    myPen3.fillRect((x * this.scale + 30), (-logy * this.scale) + 470, 1, 1)
+                }
+            }
+            evt() {
+                addEventListener('click', (e) => {
+                    switch (e.target.id) {
+                        case "inBtb":
+                            const inV = document.getElementById("input").value
+                            this.inlogV = inV
+                            this.clear()
+                            this.init()
+                    }
+                })
+            }
+            clear() {
+                this.myPen1.clearRect(0, 0, 500, 500)
+                this.myPen2.clearRect(0, 0, 500, 500)
+                this.myPen3.clearRect(0, 0, 500, 500)
+            }
+            run() {
+                this.init()
+                this.evt()
+
+            }
+        }
+
+        const myCanvas = new Canvas("myCanvas")
+        myCanvas.run()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.canvas {
+    border: 1px solid black;
+    margin-left: 48px;
+}
+
+@mixin Mcolor {
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: 0.1px solid white;
+    border-radius: 5px;
+}
+
+@mixin act {
+    :active {
+        background-color: #0b59ad;
+        box-shadow: 1px 1px 0 rgb(0, 0, 0, 0.5);
+    }
+}
+
+.btnBox {
+    width: 200px;
+    height: 200px;
+
+    .numbtn {
+        @include Mcolor();
+        width: calc(100% /3);
+        height: 50px;
+        font-size: 20px;
+
+    }
+
+    @include act();
+
+}
+
+.inputBox {
+    display: inline-flex;
+
+
+
+    .rebtn {
+        @include Mcolor();
+        width: 132px;
+        height: 49px;
+        position: absolute;
+        top: 257px;
+        left: 67.5px;
+    }
+
+    @include act();
+
+    .input {
+        font-size: 20px;
+        width: 148px;
+        height: 30px;
+    }
+
+    .btn {
+        @include Mcolor();
+        width: 50px;
+        border-radius: 5px;
+
+    }
+
+    @include act();
+
+}

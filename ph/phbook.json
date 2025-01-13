@@ -1,0 +1,34 @@
+{
+    "ph": [
+        {
+            "id": 1,
+            "name": "ZARD",
+            "tel": "010-1111-2222",
+            "addr": "Tokyo"
+        },
+        {
+            "id": 2,
+            "name": "CDR",
+            "tel": "010-1111-3333",
+            "addr": "AnSan"
+        },
+        {
+            "id": 3,
+            "name": "LOVE",
+            "tel": "010-1111-4444",
+            "addr": "Seoul"
+        },
+        {
+            "id": 4,
+            "name": "IVE",
+            "tel": "010-1111-5555",
+            "addr": "BuSan"
+        },
+        {
+            "id": 5,
+            "name": "BlackPink",
+            "tel": "010-1111-6666",
+            "addr": "SuWon"
+        }
+    ]
+}

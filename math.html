@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .canvas {
+            border: 1px solid black;
+            display: block;
+            margin: 5px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" class="canvas" width="800" height="800"></canvas>
+    <script>
+        class Clock {
+            constructor(pen) {
+                this.canvasPen = pen;
+                this.canvasWidth = document.getElementById("canvas").clientWidth;
+                this.canvasHeight = document.getElementById("canvas").clientHeight;
+                this.r = 300;
+                this.radian = Math.PI / 180;
+                this.angle = -90;
+            }
+            init() {
+                //this.printCell();
+                this.makeCircle();
+                this.secondLine();
+                this.secondHand();
+                this.minuteHand();
+                this.hourHand();
+            }
+            //원안에 초눈금 그리기
+            secondLine() {
+                // 라디안 구하기
+                // 90도부터 시작
+                for (let i = -90; i <= 240; i += 30) {
+                    for (let j = 0; j < 20; j++) {
+                        this.canvasPen.fillRect(Math.floor((this.r - j) * Math.cos(i * this.radian)) + 400, Math.floor((this.r - j) * Math.sin(i * this.radian)) + 400, 1, 1);
+                    }
+                }
+                for (let i = -90; i <= 264; i += 6) {
+                    for (let j = 0; j < 10; j++) {
+                        this.canvasPen.fillRect(Math.floor((this.r - j) * Math.cos(i * this.radian)) + 400, Math.floor((this.r - j) * Math.sin(i * this.radian)) + 400, 1, 1);
+                    }
+                }
+            }
+            // 시침 만들기
+            hourHand() {
+                const dateHour = new Date();
+                let hour = dateHour.getHours() > 12 ? dateHour.getHours() - 12 : dateHour.getHours();
+                console.log(hour);
+                for (let j = 150; j < 300; j++) {
+                    this.canvasPen.fillRect(Math.floor((this.r - j) * Math.cos((this.angle + hour * 30) * this.radian)) + 400, Math.floor((this.r - j) * Math.sin((this.angle + hour * 30) * this.radian)) + 400, 5, 5);
+                }
+                for (let j = 150; j < 300; j++) {
+                    this.canvasPen.clearRect(Math.floor((this.r - j) * Math.cos((this.angle + (hour - 1) * 30) * this.radian)) + 400, Math.floor((this.r - j) * Math.sin((this.angle + (hour - 1) * 30) * this.radian)) + 400, 5, 5);
+                }
+            }
+            // 분침 만들기
+            minuteHand() {
+                const dateMinute = new Date();
+                let minute = dateMinute.getMinutes();
+                for (let j = 100; j < 300; j++) {
+                    this.canvasPen.fillRect(Math.floor((this.r - j) * Math.cos((this.angle + minute * 6) * this.radian)) + 400, Math.floor((this.r - j) * Math.sin((this.angle + minute * 6) * this.radian)) + 400, 5, 5);
+                }
+
+                for (let j = 100; j < 300; j++) {
+                    this.canvasPen.clearRect(Math.floor((this.r - j) * Math.cos((this.angle + (minute - 1) * 6) * this.radian)) + 400, Math.floor((this.r - j) * Math.sin((this.angle + (minute - 1) * 6) * this.radian)) + 400, 5, 5);
+                }
+                //시침실행 함수 만들기
+                if (minute === 0) {
+                    this.hourHand();
+                }
+            }
+
+            // 초침 만들기
+            secondHand() {
+                const secHand = () => {
+                    const dateSecond = new Date();
+                    let second = dateSecond.getSeconds();
+                    for (let j = 150; j < 300; j++) {
+                        this.canvasPen.fillRect(Math.floor((this.r - j) * Math.cos((this.angle + second * 6) * this.radian)) + 400, Math.floor((this.r - j) * Math.sin((this.angle + second * 6) * this.radian)) + 400, 1, 1);
+                    }
+                };
+
+                const secHandClear = () => {
+                    const dateSecond = new Date();
+                    let second = dateSecond.getSeconds();
+                    for (let j = 150; j < 300; j++) {
+                        this.canvasPen.clearRect(Math.floor((this.r - j) * Math.cos((this.angle + (second - 1) * 6) * this.radian)) + 400, Math.floor((this.r - j) * Math.sin((this.angle + (second - 1) * 6) * this.radian)) + 400, 1, 1);
+                    }
+                }
+
+                //분침실행 함수 만들기
+                const minHand = () => {
+                    const dateSecond = new Date();
+                    let second = dateSecond.getSeconds();
+                    if (second === 0) {
+                        this.minuteHand();
+                    }
+                }
+                const Interval = () => {
+                    setInterval(minHand, 1000);
+                    setInterval(secHand, 1000);
+                    setInterval(secHandClear, 1000);
+                }
+                Interval();
+            }
+            //기본 원 그리기
+            makeCircle() {
+                // 원 그리는 공식 r2 = (x-a)2 + (y-b)2
+                // r 반지름 (x,y)는 좌표 (a,b)는 원의 중심
+                let width = this.canvasWidth / 2;
+                let height = this.canvasHeight / 2;
+
+                // 360도 회전하면서 그림
+                for (let x = -360; x <= 360; x += 0.01) {
+                    let y = Math.sqrt(this.r ** 2 + (-1 * x ** 2));
+                    this.canvasPen.fillRect(x + width, -y + height, 1, 1);
+                    this.canvasPen.fillRect(x + width, y + height, 1, 1);
+                }
+            }
+            //기본 사분면 그리기
+            printCell() {
+                for (let x = 0; x <= this.canvasWidth; x++) {
+                    this.canvasPen.fillRect(x, this.canvasHeight / 2, 1, 1);
+                }
+                for (let y = 0; y <= this.canvasHeight; y++) {
+                    this.canvasPen.fillRect(this.canvasWidth / 2, y, 1, 1);
+                }
+            }
+            run() {
+                this.init();
+            }
+        }
+
+        const canvas = document.getElementById("canvas");
+        const canvasPen = canvas.getContext("2d");
+        const clock = new Clock(canvasPen);
+        clock.run();
+    </script>
+</body>
+
+</html>

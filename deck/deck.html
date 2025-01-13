@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="uft-8">
+    <title>Deck</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #allArea {
+            display: flex;
+        }
+
+        .btn1 {
+            width: 100px;
+            margin: auto;
+            height: 100px;
+            margin-top: 350px;
+            background-image: url(./img/btn1.png);
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border: none;
+            background-color: transparent;
+
+        }
+
+        .btn2 {
+            width: 100px;
+            margin: auto;
+            height: 100px;
+            margin-top: 350px;
+            background-image: url(./img/btn2.png);
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border: none;
+            background-color: transparent;
+
+        }
+
+        #deckArea {
+            margin: auto;
+            margin-top: 300px;
+            width: 600px;
+            height: 200px;
+            overflow: hidden;
+
+
+        }
+
+        .showDeckArea {
+            margin-left: -200px;
+            width: 1000px;
+            height: inherit;
+            display: flex;
+        }
+
+        .ptA {
+            width: 200px;
+            height: 200px;
+        }
+
+        #ptA1 {
+            background-image: url('./img/1.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        #ptA2 {
+            background-image: url('./img/2.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        #ptA3 {
+            background-image: url('./img/3.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        #ptA4 {
+            background-image: url('./img/4.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        #ptA5 {
+            background-image: url('./img/5.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="allArea">
+
+    </div>
+    <script type="module"> //type module ****
+        import { DeckModule } from './dequeue.js';   //import 클래스명 from '경로'
+
+        class Deck extends DeckModule {        // Deck에 extends 확대 시킴  클래스명
+            constructor(id) {
+                super(id);    //모듈에서 받아 올수 있는건 super 로 받아온다.
+                this.storage = [];
+                this.newStorage = [];
+
+            }
+            init() {
+                const html = `
+            <button id="btn1" class="btn1"></button>
+            <div id="deckArea">
+                <div class="showDeckArea">
+                    <div id="ptA1" class="ptA"></div>
+                    <div id="ptA2" class="ptA"></div>
+                    <div id="ptA3" class="ptA"></div>
+                    <div id="ptA4" class="ptA"></div>
+                    <div id="ptA5" class="ptA"></div>
+                </div>
+            </div>
+            <button id="btn2" class="btn2"></button>
+            `
+                document.getElementById("allArea").innerHTML = html;
+                this.storage = Array.from(document.querySelectorAll('.ptA'));
+                //console.log(this.storage)
+            }
+            update() {      //업데이트 메소드  출력화면 을 바꿔준다.
+                const showDeckArea = document.querySelector('.showDeckArea'); //변수 showDeckArea는  querySelector로 showDeCkArea를 잡아준다.
+                showDeckArea.innerHTML = '';  // 이미지 박스가 들어갈 전체 영역을 빈 영역으로 비워 둠 
+                this.storage.forEach(element => {        //this.storage(배열) 를 순회  
+                    showDeckArea.appendChild(element);   //showDeckArea 의 자식요소를 추가한다
+                });
+            }
+            slider() {
+                document.getElementById("btn1").addEventListener('click', () => {    //이벤트 리스너 click을 통해 btn1에 이벤트를 추가
+                    const firstElement = this.shift()     //변수 firstElement는 stotage에서 shifth 한 값
+                    this.push(firstElement);    // 그 값을 요소에push한다
+                    this.update();    //그리고 update메소드 를 실행하면 새로운 배열 요소들을 가진다.
+                });
+
+
+                document.getElementById("btn2").addEventListener('click', () => {
+                    const lastElement = this.pop();      //1과 동일하게 pop으로 뒤 요소를 지우고 
+                    this.unshift(lastElement);   //앞에 추가 시킨다.
+                    this.update();
+                });
+            }
+            run() {
+                this.init();
+                this.slider()
+            }
+        }
+
+        const myDeck = new Deck("myDeck")
+        myDeck.run();
+
+    </script>
+</body>
+
+</html>

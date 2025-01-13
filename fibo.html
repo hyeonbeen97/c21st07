@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>피보나치</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #allArea {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="allArea" class="allArea"></div>
+    <script>
+        class Fibo {
+            constructor(id) {
+                this.id = id;
+                this.array = []
+            }
+
+
+            fibonacci() {
+                let value1 = 0;
+                let value2 = 1;
+                let array = [value1, value2];
+
+                for (let i = 0; i < 10; i++) {
+                    const value3 = value1 + value2;
+                    array.push(value3);
+                    value1 = value2;
+                    value2 = value3;
+                }
+                this.array = array
+                return array;
+            }
+
+            render(array) {
+                document.getElementById(this.id).innerHTML = this.array;
+
+            }
+
+            run() {
+                this.fibonacci()
+                this.render();
+            }
+        }
+
+        const myFibo = new Fibo("allArea");
+        myFibo.run();
+    </script>
+</body>
+
+</html>

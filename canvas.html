@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="utf-8">
+<title>캔버스 연습</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .canvas,
+    .canvas2,
+    .canvas3 {
+        border: 1px solid black;
+    }
+</style>
+
+<body>
+    <canvas id="canvas" class="canvas" width="400px" height="400px"></canvas>
+    <canvas id="canvas2" class="canvas2" width="400px" height="400px"></canvas>
+    <canvas id="canvas3" class="canvas2" width="400px" height="400px"></canvas>
+
+    <script>
+        class Canvas {
+            constructor(id) {
+                this.id = id
+                this.scale = 30
+            }
+            init() {
+                const myPen = document.getElementById("canvas").getContext("2d")
+                const myPen2 = document.getElementById("canvas2").getContext("2d")
+                const myPen3 = document.getElementById("canvas3").getContext("2d")
+                for (let i = 0; i < 400; i++) {
+                    myPen.fillRect(i, 200, 1, 1)
+                    myPen.fillRect(200, i, 1, 1)
+                }
+
+                for (let i = -400; i < 400; i++) {
+                    myPen2.fillRect(i, 390, 1, 1)
+                    myPen2.fillRect(10, i, 1, 1)
+                }
+
+                for (let i = -400; i < 400; i++) {
+                    myPen3.fillRect(i, 390, 1, 1)
+                    myPen3.fillRect(10, i, 1, 1)
+                }
+
+
+                for (let j = -400; j < 400; j += 0.01) {
+                    myPen.fillRect(this.scale * j + 200, -j * this.scale + 200, 1, 1)
+                }
+                for (let k = -400; k < 400; k += 0.01) {
+                    const kl = 2 ** k
+                    myPen.fillRect(k * this.scale + 200, -kl * this.scale + 200, 1, 1)
+                }
+                for (let x = 0; x < 400; x += 0.01) {
+                    const kx = Math.log2(x)
+                    myPen.fillRect(x * this.scale + 200, -kx * this.scale + 200, 1, 1)
+                }
+                for (let k = 0; k < 800; k += 0.01) {
+                    const kl = 2 ** k
+                    let scale = Math.log2(kl)
+                    myPen2.fillRect(k * this.scale, -scale * this.scale + 400, 1, 1)
+                }
+                for (let k = -400; k < 800; k += 0.01) {
+                    const kl = 2 ** k
+                    myPen3.fillRect(k * this.scale + 200, -kl * this.scale + 400, 1, 1)
+                }
+            }
+            run() {
+                this.init()
+            }
+        }
+
+        const myCanvas = new Canvas("myCanvas")
+        myCanvas.run()
+    </script>
+</body>
+
+</html>

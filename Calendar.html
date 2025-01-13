@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>달력</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            width: 100%;
+            height: 100%;
+        }
+
+        .calendarArea {
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .yearMonth {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .yearBox,
+        .monthBox {
+            font-size: 18px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .okBtn {
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            padding: 5px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .okBtn:hover {
+            background-color: #0056b3;
+        }
+
+        .calendar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dateHead {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .dhead {
+            width: calc(100% / 7);
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 10px 0;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .dateBody {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .dcell {
+            width: calc(100% / 7);
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+            border: 1px solid #e6e6e6;
+            font-size: 14px;
+            color: #333;
+        }
+
+
+
+
+        .dcell.today {
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calendarArea" id="calendarArea"></div>
+    <script>
+        class Calendar {
+            constructor(id) {
+                this.id = id;
+                this.year = null;
+                this.month = null;
+                this.now = new Date();
+                this.year = this.now.getFullYear();
+                this.month = this.now.getMonth() + 1;
+            }
+
+            init() {
+                const html = `
+                    <div id="yearMonth" class="yearMonth">
+                        <select id="yearBox" class="yearBox"></select>
+                        <select id="monthBox" class="monthBox"></select>
+                        <button id="okBtn" class="okBtn">선택</button>
+                    </div>
+                    <div id="calendar" class="calendar">
+                        <div class="dateHead">
+                            <div class="dhead">일</div>
+                            <div class="dhead">월</div>
+                            <div class="dhead">화</div>
+                            <div class="dhead">수</div>
+                            <div class="dhead">목</div>
+                            <div class="dhead">금</div>
+                            <div class="dhead">토</div>
+                        </div>
+                        <div class="dateBody" id="dateBody"></div>
+                    </div>`;
+                document.getElementById(this.id).innerHTML = html;
+
+                const yearBox = document.getElementById("yearBox");
+                const monthBox = document.getElementById("monthBox");
+
+                const currentYear = new Date().getFullYear();
+
+                //select 박스 선택 옵션 만들기
+                for (let i = currentYear - 20; i <= currentYear + 20; i++) {
+                    const option = document.createElement("option")
+                    option.value = i
+                    option.textContent = `${i}년`
+                    yearBox.appendChild(option)
+                }
+                for (let j = 1; j <= 12; j++) {
+                    const option = document.createElement("option")
+                    option.value = j
+                    option.textContent = `${j}월`
+                    monthBox.appendChild(option)
+                }
+                yearBox.value = currentYear
+                monthBox.value = new Date().getMonth() + 1
+
+                addEventListener('click', (e) => {
+                    switch (e.target.id) {
+                        case "okBtn":
+                            this.year = parseInt(yearBox.value)
+                            this.month = parseInt(monthBox.value)
+                            this.rander()
+                            break;
+                    }
+                })
+            }
+            rander() {
+                const firstDay = new Date(this.year, this.month - 1, 1).getDay()
+                const lastDay = new Date(this.year, this.month, 0).getDate();
+                const today = new Date()
+                const dateBody = document.getElementById("dateBody")
+
+                dateBody.innerHTML = ""
+
+                let html = ""
+                for (let i = 0; i < firstDay; i++) {
+                    html += `<div class="dcell empty"></div>`;
+                }
+
+
+                for (let k = 1; k <= lastDay; k++) {
+                    const isToday = this.year === today.getFullYear() && this.month === today.getMonth() + 1 && k === today.getDate();
+                    const todayClass = isToday ? "today" : "";
+                    html += `<div class="dcell ${todayClass} ">${k}</div>`
+                }
+                dateBody.innerHTML = html
+            }
+
+            run() {
+                this.init()
+                this.rander()
+            }
+
+        }
+
+        const myCal = new Calendar("calendarArea");
+        myCal.run();
+    </script>
+</body>
+
+</html>

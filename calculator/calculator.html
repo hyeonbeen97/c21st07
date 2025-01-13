@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>개 to기;;;</title>
+    <link rel="stylesheet" href="./calculator.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div id="calculatorArea" class="calculatorArea">
+            <div id="calculator" class="calculator">
+                <div id="calView" class="calView">
+                    <div id="view" class="view">
+                        123
+                    </div>
+                </div>
+                <div id="btnBox" class="btnBox">
+
+                </div>
+            </div>
+        </div>
+        <div id="canvasArea" class="canvasArea"></div>
+    </div>
+    <script>
+        class Calculator {
+            constructor(id) {
+                this.id
+            }
+            table() {
+                const table = document.createElement("table");
+                table.border = "1";
+
+                for (let i = 0; i < 6; i++) {
+                    const row = document.createElement("tr");
+                    for (let j = 0; j < 4; j++) {
+                        const cell = document.createElement("td");
+                        cell.textContent = i;
+                        row.appendChild(cell);
+                    }
+                    table.appendChild(row);
+                }
+                return table;
+            }
+
+            print() {
+                const btnBox = document.getElementById("btnBox");
+                btnBox.appendChild(this.table());
+            }
+            run() {
+                this.print()
+
+            }
+        }
+        const Cal = new Calculator("Cal")
+        Cal.run()
+    </script>
+</body>
+
+</html>

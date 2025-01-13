@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./phbook.css">
+
+</head>
+
+<body>
+    <div id="container" class="container">
+        <header id="title" class="title">
+            <h2>전화번호부</h2>
+        </header>
+        <main class="main" id="main">
+            <div class="mainHead" id="mainHead">
+                <div id="numH" class="smallT">번호</div>
+                <div id="nameH" class="smallT">이름</div>
+                <div id="phnumH" class="smallT">전화번호</div>
+                <div id="adsH" class="smallT">주소</div>
+                <div class="smallT" id="addle"></div>
+            </div>
+            <div class="mainBody" id="mainBody">
+            </div>
+        </main>
+        <footer class="footer" id="footer">
+            <div id="add" class="add">
+                이름 <input type="text" id="nameInpt">
+                전화번호 <input type="text" id="numInpt">
+                주소 <input type="text" id="addrInpt">
+                <button id="okBtn" class="okBtn">입력</button>
+
+            </div>
+        </footer>
+    </div>
+    <script>
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                const info = JSON.parse(this.responseText);
+                const { ph: getData } = info;
+                const myPB = new PhoneBook(getData);
+                myPB.run();
+            }
+        };
+
+        xhttp.open("GET", "phbook.json", true);
+        xhttp.send();
+
+        class PhoneBook {
+            constructor(data) {
+                this.data = data;
+
+
+            }
+            init() {
+                /*const allHtml = `
+                
+                `
+                document.getElementById().innerHTML =allHtml*/
+
+                this.data.forEach((v) => {
+                    let { id, name, tel, addr } = v
+
+                    const html = `
+                    <div class="list" id="${id}" value="${id}">
+                        <div id="num" class="num">${id}</div>
+                        <div id="name" class="name">${name}</div>
+                        <div id="phone" class="phone">${tel}</div>
+                        <div id="adress" class="adress">${addr}</div>
+                        <div id="btnBox" class="btnBox">
+                            <button id="reBtn${id}" class="reBtn">수정</button>
+                            <button id="delBtn${id}" class="delBtn">삭제</button>
+                        </div>
+                    </div>
+                `
+                    document.getElementById("mainBody").innerHTML += html
+
+                })
+
+
+            }
+            event() {
+                addEventListener("click", (e) => {
+                    if (e.target.classList.contains("delBtn")) {
+                        const inV = e.target.parentElement.parentElement.id
+                        this.seletNum = inV
+                        console.log(this.seletNum)
+                        this.delete()
+                    }
+                    switch (e.target.id) {
+                        case "reBtn":
+                            this.replace()
+
+                        case "okBtn":
+                            this.add()
+                    }
+                })
+            }
+            add() {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'http://localhost:5000/todos');
+                xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.send(JSON.stringify(`{ id: ${this.data.lengh}, content: 'Angular', completed: true }`));
+
+                xhr.onreadystatechange = function (e) {
+                    if (xhr.readyState !== XMLHttpRequest.DONE) return;
+
+                    if (xhr.status === 201) { // 201: Created
+                        console.log(xhr.responseText);
+                    } else {
+                        console.log("Error!");
+                    }
+                };
+
+            }
+            replace() {
+                const xhr = new XMLHttpRequest();
+                xhr.open(`'PUT', 'http://kkms4001.iptime.org:21070/ph/${this.seletNum}'`);
+                xhr.setRequestHeader('Content-type', 'application/json');
+                xhr.send(JSON.stringify(`{ id: ${this.seletNum}, name: ${this.reinputName}, tel:  ${this.reinputPhone},addr: ${this.reinputAdress} }`));
+
+                xhr.onreadystatechange = function (e) {
+                    if (xhr.readyState !== XMLHttpRequest.DONE) return;
+
+                    if (xhr.status === 200) {
+                        console.log(xhr.responseText);
+                    } else {
+                        console.log("Error!");
+                    }
+                };
+            }
+            delete() {
+                const xhr = new XMLHttpRequest();
+                xhr.open('DELETE', `http://kkms4001.iptime.org:21070/ph/${this.seletNum}`);
+                xhr.send();
+
+                xhr.onreadystatechange = function (e) {
+                    if (xhr.readyState !== XMLHttpRequest.DONE) return;
+
+                    if (xhr.status === 200) {
+                        console.log(xhr.responseText);
+                    } else {
+                        console.log("Error!");
+                    }
+                };
+            }
+            run() {
+                this.init();
+                this.event();
+            }
+
+
+        }   
+    </script>
+</body>
+
+</html>
