@@ -122,9 +122,10 @@
                 addEventListener("click", (e) => {
                     switch (e.target.id) {
                         case "drawBtn":
-
+                            this.clear()
                             this.value()
                             this.line()
+                            this.triangle()
                             break;
 
                     }
@@ -133,8 +134,8 @@
 
 
             line() {
-                this.myPen.fillRect(this.lineA[0][0] * this.scale + 300, -this.lineA[0][1] * this.scale + 300, 3, 3)
-                this.myPen.fillRect(this.lineA[1][0] * this.scale + 300, -this.lineA[1][1] * this.scale + 300, 3, 3)
+                this.myPen.fillRect(this.lineA[0][0] * this.scale + 300, -this.lineA[0][1] * this.scale + 300, 1, 1)
+                this.myPen.fillRect(this.lineA[1][0] * this.scale + 300, -this.lineA[1][1] * this.scale + 300, 1, 1)
 
                 const dX = this.lineA[0][0] - this.lineA[1][0];
                 const dY = this.lineA[0][1] - this.lineA[1][1];
@@ -142,19 +143,72 @@
                 const maxX = this.lineA[0][0] > this.lineA[1][0] ? this.lineA[0][0] : this.lineA[1][0];
                 const b = this.lineA[0][1] - (dY / dX) * this.lineA[0][0]
 
-                for (let i = minX; i <= maxX; i++) {
-                    const y = (dY / dX) * i + b;
-                    this.myPen.fillRect(i * this.scale + 300, -y * this.scale + 300, 1, 1)
 
+                const pixelStep = 1; // 1픽셀 간격으로 점 찍기
+                for (let x = minX * this.scale; x <= maxX * this.scale; x += pixelStep) {
+                    const i = x / this.scale; // x 값복원
+                    const y = (dY / dX) * i + b;
+                    this.myPen.fillRect(x + 300, -y * this.scale + 300, 1, 1);
                 }
 
             }
+            triangle() {
+                this.myPen.fillRect(this.triangleA[0][0] * this.scale + 300, -this.triangleA[0][1] * this.scale + 300, 1, 1)
+                this.myPen.fillRect(this.triangleA[1][0] * this.scale + 300, -this.triangleA[1][1] * this.scale + 300, 1, 1)
+                this.myPen.fillRect(this.triangleA[2][0] * this.scale + 300, -this.triangleA[2][1] * this.scale + 300, 1, 1)
+
+                const maxX = Math.max(this.triangleA[0][0], this.triangleA[1][0])
+                const minX = Math.min(this.triangleA[0][0], this.triangleA[1][0])
+
+                const maxX2 = Math.max(this.triangleA[1][0], this.triangleA[2][0])
+                const minX2 = Math.min(this.triangleA[1][0], this.triangleA[2][0])
+
+                const maxX3 = Math.max(this.triangleA[0][0], this.triangleA[2][0])
+                const minX3 = Math.min(this.triangleA[0][0], this.triangleA[2][0])
+
+                const dX1 = this.triangleA[0][0] - this.triangleA[1][0];
+                const dX2 = this.triangleA[1][0] - this.triangleA[2][0];
+                const dX3 = this.triangleA[0][0] - this.triangleA[2][0];
+
+
+                const dY1 = this.triangleA[0][1] - this.triangleA[1][1];
+                const dY2 = this.triangleA[1][1] - this.triangleA[2][1];
+                const dY3 = this.triangleA[0][1] - this.triangleA[2][1];
+
+                const b1 = this.triangleA[0][1] - (dY1 / dX1) * this.triangleA[0][0]
+                const b2 = this.triangleA[1][1] - (dY2 / dX2) * this.triangleA[1][0]
+                const b3 = this.triangleA[2][1] - (dY3 / dX3) * this.triangleA[2][0]
+
+                const pixelStep = 1;
+
+                for (let x = minX * this.scale; x <= maxX * this.scale; x += pixelStep) {
+                    const i = x / this.scale;
+                    const y1 = (dY1 / dX1) * i + b1;
+                    this.myPen.fillRect(x + 300, -y1 * this.scale + 300, 1, 1);
+                }
+
+                for (let x = minX2 * this.scale; x <= maxX2 * this.scale; x += pixelStep) {
+                    const i = x / this.scale;
+                    const y2 = (dY2 / dX2) * i + b2;
+                    this.myPen.fillRect(x + 300, -y2 * this.scale + 300, 1, 1);
+                }
+
+                for (let x = minX3 * this.scale; x <= maxX3 * this.scale; x += pixelStep) {
+                    const i = x / this.scale;
+                    const y3 = (dY3 / dX3) * i + b3;
+                    this.myPen.fillRect(x + 300, -y3 * this.scale + 300, 1, 1);
+                }
 
 
 
+            }
+            clear() {
+                this.myPen.clearRect(0, 0, 600, 600)
+                this.init()
+
+            }
             run() {
                 this.event()
-
                 this.init()
 
             }
