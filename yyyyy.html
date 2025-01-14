@@ -27,53 +27,48 @@
 <body>
     <section id="printSection" class="printSection"></section>
     <script>
-        class Log {
-            constructor(id, canvasId, canvasSize, scale, startXY) {
-                this.id = id;
-                this.canvasId = canvasId;
-                this.canvasSize = canvasSize;
-                this.scale = scale;
-                this.startXY = startXY;
+        class Sum {
+
+            constructor() {
+                this.a1 = [
+                    [0, 6, 1],
+                    [3, 5, 2],
+
+                ]
+                this.a2 = [
+                    [1, 0, 2],
+                    [9, 3, 8],
+                    [4, 7, 5],
+                ]
+                this.result = []
             }
-            init() {
-                const html = `
-     <canvas id="${this.canvasId}" width="${this.canvasSize}" height="${this.canvasSize}"></canvas>
-    `;
-                const printSection = document.getElementById('printSection');
-                printSection.appendChild(html);
-            }
-            print() {
-                const canvas = document.getElementById(`${this.canvasId}`);
-                const pen = canvas.getContext("2d");
-                const centerPen = (x, y) => {
-                    pen.fillRect(this.startXY + x, this.canvasSize - this.startXY - y, 1, 1);
-                }
-                for (let i = this.startXY; i <= this.canvasSize; i++) {
-                    pen.fillRect(i, this.canvasSize - this.startXY, 1, 1);
-                    pen.fillRect(this.startXY, i - this.startXY, 1, 1);
-                }
-                for (let i = 1; i < this.canvasSize; i++) {
-                    for (let j = 0; j < this.canvasSize; j++) {
-                        centerPen(i * this.scale, j);
-                        centerPen(j, i * this.scale);
+            por() {
+                for (let i = 0; i < this.a1.length; i++) {
+                    let temp = []
+                    for (let j = 0; j < this.a1[0].length; j++) {
+                        let a3 = 0
+                        for (let k = 0; k < this.a1[0].length; k++) {
+                            a3 += this.a1[i][k] * this.a2[k][j]
+
+                        }
+                        temp.push(a3)
+
                     }
-                    pen.fillText(i, this.startXY + i * this.scale - 3, this.canvasSize - this.startXY + 14);
-                    pen.fillText(this.scale * i, this.startXY - 30, this.canvasSize - this.startXY - i * this.scale);
+                    this.result.push(temp)
+
                 }
-                for (let x = 0; x < this.canvasSize; x += 0.01) { //선 그리기
-                    const y = Math.pow(2, x);
-                    centerPen(x * this.scale, y);
-                }
+
+
             }
             run() {
-                this.init();
-                this.print();
+                this.por()
+                console.log(this.result)
+
             }
+
         }
-        const graph = new Log('graph', 'canvas1', 600, 50, 30);
-        graph.run();
-        const logGraph1 = new Log('logGraph1', 'canvas2', 600, 50, 30);
-        logGraph1.run();
+        const myA = new Sum()
+        myA.run()
     </script>
 </body>
 

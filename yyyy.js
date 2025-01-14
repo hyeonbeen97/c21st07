@@ -1,14 +1,12 @@
-class SingleLinkedList {
-    constructor(id, v) {
-        this.id = id;
-        this._value = v;
-        this.nextNode = null;
+class Node {
+    constructor(data) {
+        // 노드 값
+        this.data = data;
+        // 다음 노드에 대한 참조를 저장
+        this.next = null;
     }
-    get value() { return this._value; }
-    set value(item) { this._value = item; }
-    setNext(nextNode) { this.nextNode = nextNode; }
-    next() { return this.nextNode; }
 }
+
 class Queue {
     constructor() {
         // 큐의 첫 번째 노드
@@ -18,9 +16,13 @@ class Queue {
         // 큐의 길이
         this.size = 0;
     }
-    enqueue(v) {
-        const newNode = new Node(v);
 
+    enqueue(data) {
+        // 새로운 노드 생성
+        const newNode = new Node(data);
+
+        // 큐가 비어있을 경우 head와 tail을 모두 새 노드로 설정
+        // 그렇지 않으면 현재 tail의 next 속성을 새 노드로 설정하고 tail이 새 노드를 가리키도록 업데이트
         if (!this.head) {
             this.head = newNode;
             this.tail = newNode;
@@ -31,15 +33,33 @@ class Queue {
 
         this.size++;
     }
+
+    dequeue() {
+        // 큐가 비어있을 경우 null 반환
+        // 그렇지 않으면 head를 큐의 두 번째 요소로 설정하고 제거된 노드의 data를 반환
+        if (!this.head) {
+            return null;
+        }
+
+        const removeNode = this.head;
+        this.head = this.head.next;
+        if (!this.head) {
+            this.tail = null;
+        }
+
+        this.size--;
+
+        return removeNode.data;
+    }
+    // 큐가 비어있을 경우 true 반환, 그렇지 않으면 false 반환 
+    isEmpty() {
+        return this.size === 0;
+    }
 }
+
 const Q = new Queue();
-console.log(Q)
-
-
-const sLL1 = new SingleLinkedList("sLL1", "ZARD");
-const sLL2 = new SingleLinkedList("sLL2", "ZAR3");
-const sLL3 = new SingleLinkedList("sLL3", "ZA23");
-
-sLL1.setNext(sLL2);
-sLL2.setNext(sLL3);
-console.log(sLL1);
+Q.enqueue(1);
+Q.enqueue(2);
+Q.enqueue(3);
+Q.enqueue(4);
+console.log(Q);

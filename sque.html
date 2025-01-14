@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="utf-8">
+<title>캔버스 연습</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        margin: auto;
+        width: 1200px;
+
+    }
+
+    .canvas {
+        margin-top: 100px;
+        border: 1px solid black;
+    }
+
+    .input {
+        width: 50px;
+    }
+
+    #drawBtn {
+        margin: auto;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <canvas id="canvas" class="canvas" width="600px" height="600px"></canvas>
+        <div>
+            <input type="number" id="x1" class="input">
+            <input type="number" id="y1" class="input">
+            -
+            <input type="number" id="x2" class="input">
+            <input type="number" id="y2" class="input">
+            직선 좌표
+        </div>
+        <div>
+            <input type="number" id="x3" class="input">
+            <input type="number" id="y3" class="input">
+            -
+            <input type="number" id="x4" class="input">
+            <input type="number" id="y4" class="input">
+            -
+            <input type="number" id="x5" class="input">
+            <input type="number" id="y5" class="input">
+            삼각형 좌표
+        </div>
+        <div>
+            <input type="number" id="x6" class="input">
+            <input type="number" id="y6" class="input">
+            -
+            <input type="number" id="x7" class="input">
+            <input type="number" id="y7" class="input">
+            사각형 좌표
+        </div>
+        <button id="drawBtn">그리기</button>
+    </div>
+
+    <script>
+        class Canvas {
+            constructor(id) {
+                this.id = id
+                this.scale = 10
+
+
+
+
+            }
+            init() {
+
+                const myPen = document.getElementById("canvas").getContext("2d")
+                this.myPen = myPen;
+
+                for (let i = 0; i < 600; i++) {
+                    myPen.fillRect(i, 300, 1, 1)
+                    myPen.fillRect(300, i, 1, 1)
+                }
+
+                for (let i = 0; i < 600; i += this.scale) {
+                    myPen.fillRect(i, 295, 1, 10)
+                    myPen.fillRect(295, i, 10, 1)
+                }
+            }
+            value() {
+                this.x1V = document.getElementById("x1").value
+                this.x2V = document.getElementById("x2").value
+                this.x3V = document.getElementById("x3").value
+                this.x4V = document.getElementById("x4").value
+                this.x5V = document.getElementById("x5").value
+                this.x6V = document.getElementById("x6").value
+                this.x7V = document.getElementById("x7").value
+
+                this.y1V = document.getElementById("y1").value
+                this.y2V = document.getElementById("y2").value
+                this.y3V = document.getElementById("y3").value
+                this.y4V = document.getElementById("y4").value
+                this.y5V = document.getElementById("y5").value
+                this.y6V = document.getElementById("y6").value
+                this.y7V = document.getElementById("y7").value
+
+                this.lineA = [
+                    [this.x1V, this.y1V, 0],
+                    [this.x2V, this.y2V, 0]
+                ]
+                this.triangleA = [
+                    [this.x3V, this.y3V, 0],
+                    [this.x4V, this.y4V, 0],
+                    [this.x5V, this.y5V, 0],
+                ]
+                this.quadA = [
+                    [this.x6V, this.y7V, 0],
+                    [this.x7V, this.y7V, 0]
+                ]
+            }
+
+            event() {
+                addEventListener("click", (e) => {
+                    switch (e.target.id) {
+                        case "drawBtn":
+
+                            this.value()
+                            this.line()
+                            break;
+
+                    }
+                })
+            }
+
+
+            line() {
+                this.myPen.fillRect(this.lineA[0][0] * this.scale + 300, -this.lineA[0][1] * this.scale + 300, 3, 3)
+                this.myPen.fillRect(this.lineA[1][0] * this.scale + 300, -this.lineA[1][1] * this.scale + 300, 3, 3)
+
+                const dX = this.lineA[0][0] - this.lineA[1][0];
+                const dY = this.lineA[0][1] - this.lineA[1][1];
+                const minX = this.lineA[0][0] > this.lineA[1][0] ? this.lineA[1][0] : this.lineA[0][0];
+                const maxX = this.lineA[0][0] > this.lineA[1][0] ? this.lineA[0][0] : this.lineA[1][0];
+                const b = this.lineA[0][1] - (dY / dX) * this.lineA[0][0]
+
+                for (let i = minX; i <= maxX; i++) {
+                    const y = (dY / dX) * i + b;
+                    this.myPen.fillRect(i * this.scale + 300, -y * this.scale + 300, 1, 1)
+
+                }
+
+            }
+
+
+
+            run() {
+                this.event()
+
+                this.init()
+
+            }
+        }
+
+        const myCanvas = new Canvas("myCanvas")
+        myCanvas.run()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<meta charset="utf-8">
+<title>캔버스 연습</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .canvas {
+        border: 1px solid black;
+    }
+</style>
+
+<body>
+    <canvas id="canvas" class="canvas" width="400px" height="400px"></canvas>
+
+    <script>
+        class Canvas {
+            constructor(id) {
+                this.id = id
+                this.scale = 10
+                this.move = [
+                    [1, 0, this.xm],
+                    [0, 1, this.ym],
+                    [0, 0, 1]
+                ]
+            }
+            init() {
+                const myPen = document.getElementById("canvas").getContext("2d")
+                for (let i = 0; i < 400; i++) {
+                    myPen.fillRect(i, 200, 1, 1)
+                    myPen.fillRect(200, i, 1, 1)
+                }
+
+
+                for (let i = -10; i < 10; i += 0.05) {
+                    const y = (3 * i) + 4
+                    this.m2 = [
+                        [3],
+                        [-2],
+                        [1]
+                    ]
+                    this.move = [
+                        [1, 0, i],
+                        [0, 1, y],
+                        [0, 0, 1]
+                    ]
+                    myPen.fillRect(i * this.scale + 200, -y * this.scale + 200, 1, 1)
+
+                    let result = [];
+                    for (let i = 0; i < this.move.length; i++) {
+                        let temp = []
+                        for (let j = 0; j < this.m2[i].length; j++) {
+                            let sum = 0;
+                            for (let k = 0; k < this.m2.length; k++) {
+                                sum += this.move[i][k] * this.m2[k][j];
+                            }
+                            temp.push(sum)
+                        }
+                        result.push(temp)
+                        this.result = result
+
+                    }
+                    /*for (let i = 0; i < this.move.length; i++) {
+                        let temp = []
+                        for (let j = 0; j < this.m2[0].length; j++) {
+                            let sum = 0;
+                            for (let k = 0; k < this.move[0].length; k++) {
+                                sum += this.move[i][k] * this.m2[k][j];
+                            }
+                            temp.push(sum)
+                        }
+                        result.push(temp)
+                        this.result = result
+
+                    }*/
+                    myPen.fillRect(result[0] * this.scale + 200, -result[1] * this.scale + 200, 1, 1)
+
+
+                }
+
+
+
+
+            }
+            run() {
+                this.init()
+
+            }
+        }
+
+        const myCanvas = new Canvas("myCanvas")
+        myCanvas.run()
+    </script>
+</body>
+
+</html>
