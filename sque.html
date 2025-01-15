@@ -65,7 +65,7 @@
         class Canvas {
             constructor(id) {
                 this.id = id
-                this.scale = 10
+                this.scale = 20
 
 
 
@@ -87,21 +87,21 @@
                 }
             }
             value() {
-                this.x1V = document.getElementById("x1").value
-                this.x2V = document.getElementById("x2").value
-                this.x3V = document.getElementById("x3").value
-                this.x4V = document.getElementById("x4").value
-                this.x5V = document.getElementById("x5").value
-                this.x6V = document.getElementById("x6").value
-                this.x7V = document.getElementById("x7").value
+                this.x1V = Number(document.getElementById("x1").value)
+                this.x2V = Number(document.getElementById("x2").value)
+                this.x3V = Number(document.getElementById("x3").value)
+                this.x4V = Number(document.getElementById("x4").value)
+                this.x5V = Number(document.getElementById("x5").value)
+                this.x6V = Number(document.getElementById("x6").value)
+                this.x7V = Number(document.getElementById("x7").value)
 
-                this.y1V = document.getElementById("y1").value
-                this.y2V = document.getElementById("y2").value
-                this.y3V = document.getElementById("y3").value
-                this.y4V = document.getElementById("y4").value
-                this.y5V = document.getElementById("y5").value
-                this.y6V = document.getElementById("y6").value
-                this.y7V = document.getElementById("y7").value
+                this.y1V = Number(document.getElementById("y1").value)
+                this.y2V = Number(document.getElementById("y2").value)
+                this.y3V = Number(document.getElementById("y3").value)
+                this.y4V = Number(document.getElementById("y4").value)
+                this.y5V = Number(document.getElementById("y5").value)
+                this.y6V = Number(document.getElementById("y6").value)
+                this.y7V = Number(document.getElementById("y7").value)
 
                 this.lineA = [
                     [this.x1V, this.y1V, 0],
@@ -112,8 +112,8 @@
                     [this.x4V, this.y4V, 0],
                     [this.x5V, this.y5V, 0],
                 ]
-                this.quadA = [
-                    [this.x6V, this.y7V, 0],
+                this.squareA = [
+                    [this.x6V, this.y6V, 0],
                     [this.x7V, this.y7V, 0]
                 ]
             }
@@ -126,6 +126,7 @@
                             this.value()
                             this.line()
                             this.triangle()
+                            this.square()
                             break;
 
                     }
@@ -179,7 +180,7 @@
                 const b2 = this.triangleA[1][1] - (dY2 / dX2) * this.triangleA[1][0]
                 const b3 = this.triangleA[2][1] - (dY3 / dX3) * this.triangleA[2][0]
 
-                const pixelStep = 1;
+                const pixelStep = 0.1;
 
                 for (let x = minX * this.scale; x <= maxX * this.scale; x += pixelStep) {
                     const i = x / this.scale;
@@ -200,6 +201,34 @@
                 }
 
 
+
+            }
+            square() {
+                this.myPen.fillRect(this.squareA[0][0] * this.scale + 300, -this.squareA[0][1] * this.scale + 300, 1, 1)
+                this.myPen.fillRect(this.squareA[1][0] * this.scale + 300, -this.squareA[1][1] * this.scale + 300, 1, 1)
+
+                this.myPen.fillRect(this.squareA[0][0] * this.scale + 300, -this.squareA[1][1] * this.scale + 300, 1, 1)
+                this.myPen.fillRect(this.squareA[1][0] * this.scale + 300, -this.squareA[0][1] * this.scale + 300, 1, 1)
+
+                const minX = this.squareA[0][0] > this.squareA[1][0] ? this.squareA[1][0] : this.squareA[0][0];
+                const maxX = this.squareA[0][0] > this.squareA[1][0] ? this.squareA[0][0] : this.squareA[1][0];
+
+                const maxY = this.squareA[0][1] > this.squareA[1][1] ? this.squareA[0][1] : this.squareA[1][1];
+                const minY = this.squareA[0][1] > this.squareA[1][1] ? this.squareA[1][1] : this.squareA[0][1];
+                console.log(minY, maxY)
+
+
+                const pixelStep = 1; // 1픽셀 간격으로 점 찍기
+                for (let x = minX * this.scale; x <= maxX * this.scale; x += pixelStep) {
+                    this.myPen.fillRect(x + 300, -this.squareA[1][1] * this.scale + 300, 1, 1);
+                    this.myPen.fillRect(x + 300, -this.squareA[0][1] * this.scale + 300, 1, 1);
+
+                }
+                for (let y = minY * this.scale; y <= maxY * this.scale; y += pixelStep) {
+
+                    this.myPen.fillRect(this.squareA[1][0] * this.scale + 300, -y + 300, 1, 1);
+                    this.myPen.fillRect(this.squareA[0][0] * this.scale + 300, -y + 300, 1, 1);
+                }
 
             }
             clear() {
