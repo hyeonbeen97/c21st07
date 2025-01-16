@@ -1,5 +1,6 @@
-var InMatrix = /** @class */ (function () {
-    function InMatrix() {
+"use strict";
+class InMatrix {
+    constructor() {
         this.matrix = [
             [5, 6, 7],
             [8, 9, 10],
@@ -7,20 +8,20 @@ var InMatrix = /** @class */ (function () {
             [14, 15, 16]
         ];
     }
-    InMatrix.prototype.proess = function () {
-        var result = [];
-        for (var i = 0; i < this.matrix[0].length; i++) { // 열
-            var row = [];
-            for (var j = 0; j < this.matrix.length; j++) { // 행
+    proess() {
+        const result = [];
+        for (let i = 0; i < this.matrix[0].length; i++) { // 열
+            const row = [];
+            for (let j = 0; j < this.matrix.length; j++) { // 행
                 row.push(this.matrix[j][i]); // 행과 열 바꾸기
             }
             result.push(row);
         }
-    };
-    InMatrix.prototype.run = function () {
+        document.write(String(result));
+    }
+    run() {
         this.proess;
-    };
-    return InMatrix;
-}());
-var inma = new InMatrix();
+    }
+}
+const inma = new InMatrix();
 inma.run();

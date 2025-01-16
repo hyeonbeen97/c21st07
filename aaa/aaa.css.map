@@ -1,7 +1,1 @@
-{
-"version": 3,
-"mappings": "",
-"sources": [],
-"names": [],
-"file": "aaa.css"
-}
+{"version":3,"sources":["aaa.scss","aaa.css"],"names":[],"mappings":"AAAA;EACI,SAAA;EACA,UAAA;ACCJ;;ADEA;EACI,yBAAA;ACCJ","file":"aaa.css"}

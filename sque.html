@@ -11,12 +11,18 @@
     .container {
         margin: auto;
         width: 1200px;
+        display: flex;
 
     }
 
     .canvas {
         margin-top: 100px;
         border: 1px solid black;
+    }
+
+    .in {
+        width: 800px;
+        margin: 100px 0 0 100px;
     }
 
     .input {
@@ -31,34 +37,53 @@
 <body>
     <div class="container">
         <canvas id="canvas" class="canvas" width="600px" height="600px"></canvas>
-        <div>
-            <input type="number" id="x1" class="input">
-            <input type="number" id="y1" class="input">
-            -
-            <input type="number" id="x2" class="input">
-            <input type="number" id="y2" class="input">
-            직선 좌표
+        <div class="in">
+            <div>
+                <div>(
+                    <input type="number" id="x1" class="input">
+                    <input type="number" id="y1" class="input">)
+                    - (
+                    <input type="number" id="x2" class="input">
+                    <input type="number" id="y2" class="input">)
+                    <br>
+                    직선 좌표
+                </div>
+                <div>(
+                    <input type="number" id="x3" class="input">
+                    <input type="number" id="y3" class="input">)
+                    -(
+                    <input type="number" id="x4" class="input">
+                    <input type="number" id="y4" class="input">)
+                    -(
+                    <input type="number" id="x5" class="input">
+                    <input type="number" id="y5" class="input">)
+                    <br>
+
+                    삼각형 좌표
+                </div>
+                <div>(
+                    <input type="number" id="x6" class="input">
+                    <input type="number" id="y6" class="input">)
+                    -(
+                    <input type="number" id="x7" class="input">
+                    <input type="number" id="y7" class="input">)
+                    <br>
+
+                    사각형 좌표
+                </div>
+                <button id="drawBtn">그리기</button>
+            </div>
+            <div>
+                <div>
+                    <input type="number" id="lineX" class="input">
+                    <input type="number" id="lineY" class="input">
+                    직선 이동 값
+                </div>
+
+                <button id="drawBtn2">그리기</button>
+
+            </div>
         </div>
-        <div>
-            <input type="number" id="x3" class="input">
-            <input type="number" id="y3" class="input">
-            -
-            <input type="number" id="x4" class="input">
-            <input type="number" id="y4" class="input">
-            -
-            <input type="number" id="x5" class="input">
-            <input type="number" id="y5" class="input">
-            삼각형 좌표
-        </div>
-        <div>
-            <input type="number" id="x6" class="input">
-            <input type="number" id="y6" class="input">
-            -
-            <input type="number" id="x7" class="input">
-            <input type="number" id="y7" class="input">
-            사각형 좌표
-        </div>
-        <button id="drawBtn">그리기</button>
     </div>
 
     <script>
@@ -66,10 +91,6 @@
             constructor(id) {
                 this.id = id
                 this.scale = 20
-
-
-
-
             }
             init() {
 
@@ -103,6 +124,9 @@
                 this.y6V = Number(document.getElementById("y6").value)
                 this.y7V = Number(document.getElementById("y7").value)
 
+                this.lineXV = Number(document.getElementById("lineX").value)
+                this.lineYV = Number(document.getElementById("lineY").value)
+                //그리기
                 this.lineA = [
                     [this.x1V, this.y1V, 0],
                     [this.x2V, this.y2V, 0]
@@ -116,6 +140,25 @@
                     [this.x6V, this.y6V, 0],
                     [this.x7V, this.y7V, 0]
                 ]
+
+                //라인 대칭
+                this.lineMove = [
+                    [this.lineXV],
+                    [this.lineYV],
+                    [1]
+                ]
+                this.lineXY = [
+                    [1, 0, this.x1V],
+                    [0, 1, this.y1V],
+                    [0, 0, 1]
+                ]
+                this.lineXY2 = [
+                    [1, 0, this.x2V],
+                    [0, 1, this.y2V],
+                    [0, 0, 1]
+                ]
+
+
             }
 
             event() {
@@ -128,7 +171,11 @@
                             this.triangle()
                             this.square()
                             break;
-
+                        case "drawBtn2":
+                            this.clear2()
+                            this.value()
+                            this.mLine()
+                            break;
                     }
                 })
             }
@@ -143,6 +190,50 @@
                 const minX = this.lineA[0][0] > this.lineA[1][0] ? this.lineA[1][0] : this.lineA[0][0];
                 const maxX = this.lineA[0][0] > this.lineA[1][0] ? this.lineA[0][0] : this.lineA[1][0];
                 const b = this.lineA[0][1] - (dY / dX) * this.lineA[0][0]
+
+
+                const pixelStep = 1; // 1픽셀 간격으로 점 찍기
+                for (let x = minX * this.scale; x <= maxX * this.scale; x += pixelStep) {
+                    const i = x / this.scale; // x 값복원
+                    const y = (dY / dX) * i + b;
+                    this.myPen.fillRect(x + 300, -y * this.scale + 300, 1, 1);
+                }
+
+            }
+            mLine() {
+                let result = [];
+                for (let i = 0; i < this.lineXY.length; i++) {
+                    let temp = []
+                    for (let j = 0; j < this.lineMove[i].length; j++) {
+                        let sum = 0;
+                        for (let k = 0; k < this.lineMove.length; k++) {
+                            sum += this.lineXY[i][k] * this.lineMove[k][j];
+                        }
+                        temp.push(sum)
+                    }
+                    result.push(temp)
+                    this.result = result
+                }
+
+                let result2 = [];
+                for (let i = 0; i < this.lineXY2.length; i++) {
+                    let temp = []
+                    for (let j = 0; j < this.lineMove[i].length; j++) {
+                        let sum = 0;
+                        for (let k = 0; k < this.lineMove.length; k++) {
+                            sum += this.lineXY2[i][k] * this.lineMove[k][j];
+                        }
+                        temp.push(sum)
+                    }
+                    result2.push(temp)
+                    this.result2 = result2
+                }
+
+                const dX = Number(this.result[0]) - Number(this.result2[0]);
+                const dY = Number(this.result[1]) - Number(this.result2[1]);
+                const minX = Number(this.result[0]) > Number(this.result2[0]) ? Number(this.result2[0]) : Number(this.result[0]);
+                const maxX = Number(this.result2[0]) > Number(this.result[0]) ? Number(this.result2[0]) : Number(this.result[0]);
+                const b = Number(this.result[1]) - (dY / dX) * Number(this.result[0])
 
 
                 const pixelStep = 1; // 1픽셀 간격으로 점 찍기
@@ -200,8 +291,6 @@
                     this.myPen.fillRect(x + 300, -y3 * this.scale + 300, 1, 1);
                 }
 
-
-
             }
             square() {
                 this.myPen.fillRect(this.squareA[0][0] * this.scale + 300, -this.squareA[0][1] * this.scale + 300, 1, 1)
@@ -215,7 +304,6 @@
 
                 const maxY = this.squareA[0][1] > this.squareA[1][1] ? this.squareA[0][1] : this.squareA[1][1];
                 const minY = this.squareA[0][1] > this.squareA[1][1] ? this.squareA[1][1] : this.squareA[0][1];
-                console.log(minY, maxY)
 
 
                 const pixelStep = 1; // 1픽셀 간격으로 점 찍기
@@ -234,6 +322,12 @@
             clear() {
                 this.myPen.clearRect(0, 0, 600, 600)
                 this.init()
+
+            }
+            clear2() {
+                this.myPen.clearRect(0, 0, 600, 600)
+                this.init()
+                this.line()
 
             }
             run() {

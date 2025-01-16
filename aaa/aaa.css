@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
 
-
-/*# sourceMappingURL=aaa.css.map */
+body {
+  background-color: #b44f4f;
+}/*# sourceMappingURL=aaa.css.map */

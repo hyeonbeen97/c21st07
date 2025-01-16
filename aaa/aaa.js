@@ -1,4 +1,1 @@
-function sum(a, b) {
-    return a + b;
-}
-sum(3, 2);
+"use strict";
