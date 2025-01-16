@@ -1,7 +1,6 @@
 "use strict";
 class Karma {
-    constructor() {
-    }
+    constructor() { }
     init() {
         this.clickEvent();
     }
@@ -9,16 +8,16 @@ class Karma {
         addEventListener("click", (e) => {
             switch (e.target.id) {
                 case "box1":
-                    alert("ds1");
+                    e.target.classList.toggle("red");
                     break;
                 case "box2":
-                    alert("ds2");
+                    e.target.classList.toggle("red");
                     break;
                 case "box3":
-                    alert("ds3");
+                    e.target.classList.toggle("red");
                     break;
                 case "box4":
-                    alert("ds4");
+                    e.target.classList.toggle("red");
                     break;
             }
         });

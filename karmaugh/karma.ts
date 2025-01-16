@@ -1,31 +1,38 @@
-class Karma {
-    constructor() {
+"use strict";
 
-    }
+class Karma {
+    constructor() { }
+
     init() {
-        this.clickEvent()
+        this.clickEvent();
     }
+
     clickEvent() {
         addEventListener("click", (e: any) => {
+
             switch (e.target.id) {
                 case "box1":
-                    alert("ds1")
+                    e.target.classList.toggle("red");
                     break;
                 case "box2":
-                    alert("ds2")
+                    e.target.classList.toggle("red");
                     break;
                 case "box3":
-                    alert("ds3")
+                    e.target.classList.toggle("red");
                     break;
                 case "box4":
-                    alert("ds4")
+                    e.target.classList.toggle("red");
                     break;
             }
-        })
+        });
     }
+
+
+
     run() {
-        this.init()
+        this.init();
     }
 }
-const view = new Karma()
-view.run()
+
+const view = new Karma();
+view.run();

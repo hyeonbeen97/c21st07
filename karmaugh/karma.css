@@ -33,4 +33,7 @@ body {
   text-align: center;
   line-height: 198px;
   font-size: 30px;
+}
+.container .include .box.red {
+  background-color: #c8d4a5;
 }/*# sourceMappingURL=karma.css.map */
