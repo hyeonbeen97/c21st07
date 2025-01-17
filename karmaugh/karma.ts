@@ -18,7 +18,7 @@ class Karma {
                     e.target.classList.toggle("red");
                     break;
                 case "box3":
-                    e.target.classList.toggle("red");
+                    e.target.classList.toggle("red"); `  `
                     break;
                 case "box4":
                     e.target.classList.toggle("red");
