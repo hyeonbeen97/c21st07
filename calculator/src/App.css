@@ -1,0 +1,60 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Single Day", serif;
+  font-weight: 400;
+  font-style: bold;
+  font-size: 20px;
+}
+
+body {
+  background-color: rgb(255, 255, 255);
+}
+body .container {
+  border-radius: 30px;
+  background-color: #85a792;
+  margin: 70px auto 0 auto;
+  width: 1700px;
+  height: 850px;
+  box-sizing: border-box;
+  padding: 50px;
+}
+body .container .canvasArea {
+  width: 50%;
+}
+body .container .canvasArea .csvhist {
+  display: flex;
+  justify-content: space-between;
+}
+body .container .canvasArea .csvhist .histroy {
+  width: 30%;
+  padding: 20px;
+  text-align: center;
+  height: 500px;
+}
+body .container .canvasArea .csvhist .canvas {
+  border-radius: 50px;
+  background: #85a792;
+  box-shadow: inset 19px 19px 38px #698473, inset -19px -19px 38px #a1cab1;
+}
+body .container .canvasArea .cvsBtn {
+  width: 100%;
+  height: 200px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  display: flex;
+  padding-top: 30px;
+  justify-content: space-between;
+  font-family: "Nanum Gothic", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+body .container .canvasArea .cvsBtn button {
+  width: 19%;
+  height: 50px;
+  border-radius: 30px;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(145deg, #8eb39c, #789683);
+  box-shadow: 19px 19px 38px #698473, -19px -19px 38px #a1cab1;
+}/*# sourceMappingURL=App.css.map */

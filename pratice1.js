@@ -1,37 +1,44 @@
-"use strict";
-var _a, _b, _c, _d, _e, _f;
-class Queue {
+class AnyService {
     constructor() {
-        this.data = [];
+        this.id = this.id;
+        this.eService = require("express");
+        this.webService = null
+        this.bodyParser = require("body-parser")
     }
-    push(item) {
-        this.data.push(item);
+    init() {
+        this.webService = this.eService()
+        this.webService.use(this.bodyParser.urlencoded({ extended: false }))
+        this.webService.use(this.eService.static("assets"))
     }
-    pop() {
-        return this.data.shift();
+    routes() {
+        this.webService.get("/", (req, res) => {
+            console.log('${req,query.select}')
+        })
+
+        this.webService.post("login", (req, res) => {
+            console.log(`${req.body.id} : ${req.body.pw}`)
+        })
+
+        this.webService.get("/images", (req, res) => {
+            res.send(`<img src="1.jpg">`)
+        })
+        this.webService.get("/join", (req, res) => {
+            let htmlString = '';
+            for (let i = 0; i < 5; i++) {
+                htmlString += `<img src="myImages${i}">`
+            }
+            res.send(htmlString)
+        })
+        this.webService.listen(2000, () => {
+            console.log("ㅗ")
+        })
     }
+    startService() {
+        this.init()
+        this.routes()
+    }
+
 }
-// number 전용 Queue
-const numberQueue = new Queue();
-numberQueue.push(0);
-// numberQueue.push('1'); // 의도하지 않은 실수를 사전 검출 가능
-numberQueue.push(+'1'); // 실수를 사전 인지하고 수정할 수 있다
-// ?. => optional chaining
-// https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#optional-chaining
-console.log((_a = numberQueue.pop()) === null || _a === void 0 ? void 0 : _a.toFixed()); // 0
-console.log((_b = numberQueue.pop()) === null || _b === void 0 ? void 0 : _b.toFixed()); // 1
-console.log((_c = numberQueue.pop()) === null || _c === void 0 ? void 0 : _c.toFixed()); // undefined
-// string 전용 Queue
-const stringQueue = new Queue();
-stringQueue.push('Hello');
-stringQueue.push('World');
-console.log((_d = stringQueue.pop()) === null || _d === void 0 ? void 0 : _d.toUpperCase()); // HELLO
-console.log((_e = stringQueue.pop()) === null || _e === void 0 ? void 0 : _e.toUpperCase()); // WORLD
-console.log((_f = stringQueue.pop()) === null || _f === void 0 ? void 0 : _f.toUpperCase()); // undefined
-// 커스텀 객체 전용 Queue
-const myQueue = new Queue();
-myQueue.push({ name: 'Lee', age: 10 });
-myQueue.push({ name: 'Kim', age: 20 });
-console.log(myQueue.pop()); // { name: 'Lee', age: 10 }
-console.log(myQueue.pop()); // { name: 'Kim', age: 20 }
-console.log(myQueue.pop()); // undefined
+const myApp = new AnyService("myApp")
+myApp.startService()
+

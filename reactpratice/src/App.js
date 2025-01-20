@@ -1,7 +1,7 @@
 import './App.css';
 import { useState } from 'react';
 function Hearder(props){
-  return  <header>
+  return  <header className='as'>
         <h1><a href='/' onClick={(event)=>{
           event.preventDefault();
           props.onChangeMode()
@@ -163,7 +163,7 @@ function App() {
       
     }}></Update>
   }
-
+              
   return (
     <div>
       <Hearder title="오늘의 할 일" onChangeMode={()=>{
