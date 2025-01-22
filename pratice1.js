@@ -1,44 +1,34 @@
-class AnyService {
-    constructor() {
-        this.id = this.id;
-        this.eService = require("express");
-        this.webService = null
-        this.bodyParser = require("body-parser")
+var Boul = /** @class */ (function () {
+    function Boul() {
+        this.boulMatrixA = [
+            [true, false, false],
+            [true, true, true]
+        ];
+        this.boulMatrixB = [
+            [false, true],
+            [true, true],
+            [true, false]
+        ];
     }
-    init() {
-        this.webService = this.eService()
-        this.webService.use(this.bodyParser.urlencoded({ extended: false }))
-        this.webService.use(this.eService.static("assets"))
-    }
-    routes() {
-        this.webService.get("/", (req, res) => {
-            console.log('${req,query.select}')
-        })
-
-        this.webService.post("login", (req, res) => {
-            console.log(`${req.body.id} : ${req.body.pw}`)
-        })
-
-        this.webService.get("/images", (req, res) => {
-            res.send(`<img src="1.jpg">`)
-        })
-        this.webService.get("/join", (req, res) => {
-            let htmlString = '';
-            for (let i = 0; i < 5; i++) {
-                htmlString += `<img src="myImages${i}">`
+    Boul.prototype.process = function () {
+        var result = [];
+        for (var i = 0; i < this.boulMatrixA.length; i++) {
+            var temp = [];
+            for (var j = 0; j < this.boulMatrixB[0].length; j++) {
+                var a3 = false;
+                for (var k = 0; k < this.boulMatrixB[0].length; k++) {
+                    a3 += this.boulMatrixA[i][k] * this.boulMatrixB[k][j];
+                }
+                temp.push(a3);
             }
-            res.send(htmlString)
-        })
-        this.webService.listen(2000, () => {
-            console.log("ㅗ")
-        })
-    }
-    startService() {
-        this.init()
-        this.routes()
-    }
-
-}
-const myApp = new AnyService("myApp")
-myApp.startService()
-
+            result.push(temp);
+            console.log(result);
+        }
+    };
+    Boul.prototype.run = function () {
+        this.process();
+    };
+    return Boul;
+}());
+var boul = new Boul;
+boul.run();

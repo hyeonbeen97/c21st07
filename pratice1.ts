@@ -1,41 +1,39 @@
-class Queue<T> {
-    protected data: Array<T> = [];
-    push(item: T) {
-        this.data.push(item);
+class Boul {
+    boulMatrixA: any[][]
+    boulMatrixB: any[][]
+    constructor() {
+        this.boulMatrixA = [
+            [true, false, false],
+            [true, true, true]
+
+        ]
+        this.boulMatrixB = [
+            [false, true],
+            [true, true],
+            [true, false]
+        ]
     }
-    pop(): T | undefined {
-        return this.data.shift();
+    process() {
+        let result: any[][] = []
+        for (let i = 0; i < this.boulMatrixA.length; i++) {
+            let temp: boolean[][] = []
+            for (let j = 0; j < this.boulMatrixB[0].length; j++) {
+                let a3: any = false
+                for (let k = 0; k < this.boulMatrixA[0].length; k++) {
+                    a3 += this.boulMatrixA[i][k] * this.boulMatrixB[k][j]
+
+                }
+                temp.push(a3)
+
+            }
+            result.push(temp)
+            console.log(result)
+
+        }
     }
+    run() {
+        this.process()
+    }
+
 }
-
-// number 전용 Queue
-const numberQueue = new Queue<number>();
-
-numberQueue.push(0);
-// numberQueue.push('1'); // 의도하지 않은 실수를 사전 검출 가능
-numberQueue.push(+'1');   // 실수를 사전 인지하고 수정할 수 있다
-
-// ?. => optional chaining
-// https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#optional-chaining
-console.log(numberQueue.pop()?.toFixed()); // 0
-console.log(numberQueue.pop()?.toFixed()); // 1
-console.log(numberQueue.pop()?.toFixed()); // undefined
-
-// string 전용 Queue
-const stringQueue = new Queue<string>();
-
-stringQueue.push('Hello');
-stringQueue.push('World');
-
-console.log(stringQueue.pop()?.toUpperCase()); // HELLO
-console.log(stringQueue.pop()?.toUpperCase()); // WORLD
-console.log(stringQueue.pop()?.toUpperCase()); // undefined
-
-// 커스텀 객체 전용 Queue
-const myQueue = new Queue<{ name: string, age: number }>();
-myQueue.push({ name: 'Lee', age: 10 });
-myQueue.push({ name: 'Kim', age: 20 });
-
-console.log(myQueue.pop()); // { name: 'Lee', age: 10 }
-console.log(myQueue.pop()); // { name: 'Kim', age: 20 }
-console.log(myQueue.pop()); // undefined
+const boul = new Boul

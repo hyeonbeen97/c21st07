@@ -1,0 +1,81 @@
+import React, { useEffect } from "react";
+
+function Canvas() {
+    useEffect(() => {
+        const canvas = document.getElementById("canvas");
+        const pen = canvas.getContext("2d");
+        const scaleF = 20
+        const offset = 250;
+        for (let i = 0; i <= 500; i += scaleF) {
+            for (let j = 0; j < 500; j++) {
+                pen.fillStyle = "gray";
+                pen.fillRect(offset + i, j, 0.5, 0.5);
+                pen.fillRect(offset - i, j, 0.5, 0.5);
+                pen.fillRect(j, offset + i, 0.5, 0.5);
+                pen.fillRect(j, offset - i, 0.5, 0.5);
+            }
+        }
+        // 눈금 표시
+        for (let s = 0; s <= 500; s += scaleF) {
+            pen.fillStyle = "white";
+            pen.fillRect(offset + s, offset - 5, 1, 10);
+            pen.fillRect(offset - s, offset - 5, 1, 10);
+            pen.fillRect(offset - 5, offset + s, 10, 1);
+            pen.fillRect(offset - 5, offset - s, 10, 1);
+        }
+
+
+        for (let i = 0; i < 500; i++) {
+            pen.fillStyle = "white";
+            pen.fillRect(i, offset, 1, 1);
+            pen.fillRect(offset, i, 1, 1);
+        }
+
+
+
+    });
+    return <canvas id="canvas" className="canvas" width="500" height="500"></canvas>;
+}
+
+function CanvasBtn() {
+    return <div id="cvsBtn" className="cvsBtn">
+        <div id="scalecontroller" className="scaleController">
+            <button className="scaleBtn"><i className="xi-plus"></i></button>
+            <button className="scaleBtn"><i className="xi-minus"></i></button>
+            <button className="scaleBtn"><i className="xi-eraser-o"></i></button>
+        </div>
+
+        <div id="controller" className="controller">
+            <article className="fLine">
+                <button className="ctrBtn" id="arrowKeysU"><i className="xi-angle-up"></i></button>
+            </article>
+            <article className="sLine">
+                <button className="ctrBtn" id="arrowKeysL"><i className="xi-angle-left"></i></button>
+                <button className="ctrBtn" id="arrowKeysD"><i className="xi-redo"></i></button>
+                <button className="ctrBtn" id="arrowKeysR"><i className="xi-angle-right"></i></button>
+            </article>
+            <article className="fLine">
+                <button className="ctrBtn" id="arrowKeysU"><i className="xi-angle-down"></i></button>
+            </article>
+        </div>
+
+    </div >
+}
+// class CulCanvas {
+//     basicCanvas() {
+//         const canvas = document.getElementById("canvas")
+//         const pen = canvas.getContext("2d")
+//         for (let i = 0; i < 500; i++) {
+//             pen?.fillRect(i, 250, 2, 2)
+//             pen?.fillRect(250, i, 2, 2)
+//         }
+
+//     }
+//     print() {
+//         this.basicCanvas()
+//     }
+
+// }
+// const cvs = new CulCanvas();
+// cvs.print();
+export { Canvas, CanvasBtn };
