@@ -1,0 +1,16 @@
+{
+  "name": "nexpress",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "start": "supervisor app"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "supervisor": "^0.12.0"
+  },
+  "description": ""
+}
