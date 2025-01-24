@@ -1,0 +1,7 @@
+const path = require('path')
+const routeJoin = (req, res) => {
+    res.sendFile(path.join(__dirname, "./join.html"))
+    // res.sendFile(path.join(__dirname, '/join.html'))
+}
+
+module.exports = routeJoin

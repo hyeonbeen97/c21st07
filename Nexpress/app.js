@@ -1,21 +1,32 @@
-const express = require('express');
-const app = express();
-const path = require('path');
+//31일에 만나요??????????
+class LoginApp {
+    constructor(id) {
+        this.id = id
+    }
+    run() { }
+}
+const loginApp = new LoginApp("loginApp")
+loginApp.run()
 
-// 라우터 가져오기
-const saveRouter = require('./save');
-const userRouter = require('./user');
+const config = require("./config/config")
+const bodyParser = require("body-parser");
+const loginApp = createExp('loginApp')
 
-// 정적 HTML 파일 제공
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '/join.html'));
-});
+loginApp.use(bodyParser.urlencoded({ extended: false }));
 
-// 라우터 등록
-app.use('/save', saveRouter);
-app.use('/user', userRouter);
+const createExp = require("./expressObj")
+const routeHome = require("./routeHome")
+const routeJoin = require("./routeJoin")
+const routeCreateUser = require("./routeCreateUser")
+const routeLogin = require("./routeLogin")
 
-// 포트 연결
-app.listen(3000, () => {
-    console.log('http://localhost:3000');
+
+loginApp.route("/").get((req, res) => { routeHome(req, res) })
+loginApp.route("/join").get((req, res) => { routeJoin(req, res) })
+loginApp.route("/createUser").post((req, res) => { routeCreateUser(req, res); });
+loginApp.route("/login").get((req, res) => { routeLogin(req, res) })
+
+
+loginApp.listen(config.port, config.hostname, () => {
+    console.log(`http://localhost:${config.port}`);
 });

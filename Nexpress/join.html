@@ -9,9 +9,9 @@
 
 <body>
     <h1>회원 가입</h1>
-    <form method="post" action="./save">
-        <input type="text" name="userId">
-        <input type="text" name="userPw">
+    <form method="post" action="/createUser">
+        <label>ID:<input type="text" name="userId"></label>
+        <label>PW:<input type="text" name="userPw" pattern="(?=.+\d)\w{4,10}"></label>
         <input type="submit" value="가입">
     </form>
 
