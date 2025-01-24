@@ -145,7 +145,11 @@ body {
                     }
 
 
+
+
                 }
+
+
 
                 .graphBtn {
                     display: flex;
@@ -259,6 +263,7 @@ body {
                     height: 100px;
                     background-color: #3f3c3c;
                     margin: 30px auto;
+                    overflow-y: hidden;
                     border-radius: 20px;
                     box-shadow: inset 10px 10px 10px #363232;
                     box-sizing: border-box;
@@ -268,6 +273,21 @@ body {
                         text-align: right;
                         line-height: 50px;
                         font-size: 50px;
+
+                    }
+
+
+
+                    &::-webkit-scrollbar {
+                        width: 10px;
+                        height: 10px;
+
+                    }
+
+                    &::-webkit-scrollbar-track {
+                        border-radius: 30px;
+                        background: #f39a25;
+
 
                     }
                 }
