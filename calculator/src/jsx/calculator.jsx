@@ -1,72 +1,81 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState } from "react";
 
 function Calculator() {
-    const calculatorRef = useRef(null);
+    const [input, setInput] = useState("");
 
-    useEffect(() => {
-        const handleClick = (e) => {
-            if (e.target.classList.contains("calculBtn")) {
-                const inV = e.target.value;
-                console.log(inV);
+    const handleClick = (value) => {
+        if (value === "=") {
+            handleCalculate();
+        } else if (value === "C") {
+            setInput("");
+        } else if (value === "⌫") {
+            setInput(input.slice(0, -1));
+        } else if (value === "sin") {
+            setInput(Math.sin(input).toString());
+        } else if (value === "tan") {
+            setInput(Math.tan(input).toString());
 
-                const initV = document.getElementById("initNumV")
-                initV.innerHTML += inV
-            }
-        };
+        } else if (value === "cos") {
+            setInput(Math.cos(input).toString());
 
-        const calculatorElement = calculatorRef.current;
-        if (calculatorElement) {
-            calculatorElement.addEventListener("click", handleClick);
+        } else if (value === "root") {
+            setInput(Math.sqrt(input));
+
         }
 
+        else {
+            setInput(input + value);
+        }
+    };
 
-        return () => {
-            if (calculatorElement) {
-                calculatorElement.removeEventListener("click", handleClick);
-            }
-        };
-    }, []);
+    const handleCalculate = () => {
+        try {
+            setInput(eval(input).toString()); // 보안 문제를 고려하여 Function 생성자로 변경 가능
+        } catch (error) {
+            setInput("Error");
+        }
+    };
 
     return (
-        <div id="calculator" className="calculator" ref={calculatorRef}>
+        <div id="calculator" className="calculator">
             <section id="numView" className="numView">
-                <p id="initNumV"></p>
+                <p id="initNumV">{input}</p>
             </section>
             <section id="numBtn6" className="numBtn">
-                <button className="calculBtn" value="C"><i className="fa-solid fa-c"></i></button>
-                <button className="calculBtn" value="("><i>(</i></button>
-                <button className="calculBtn" value=")"><i>)</i></button>
-                <button className="calculBtn" value="&#9003;"><i className="fa-solid fa-delete-left"></i></button>
+                <button onClick={() => handleClick("C")} className="cleatBtn">C</button>
+                <button onClick={() => handleClick("(")} className="calculBtn">(</button>
+                <button onClick={() => handleClick(")")} className="calculBtn">)</button>
+                <button onClick={() => handleClick("⌫")} className="calculBtn">⌫</button>
             </section>
             <section id="numBtn5" className="numBtn">
-                <button className="calculBtn" value="log"><i>log</i></button>
-                <button className="calculBtn" value="tan"><i>tan</i></button>
-                <button className="calculBtn" value="sin"><i>sin</i></button>
-                <button className="calculBtn" value="π"><i>π</i></button>
+                <button onClick={() => handleClick("cos")} className="cleatBtn">cos</button>
+                <button onClick={() => handleClick("sin")} className="calculBtn">sin</button>
+                <button onClick={() => handleClick("tan")} className="calculBtn">tan</button>
+                <button onClick={() => handleClick("root")} className="calculBtn">&radic;</button>
             </section>
             <section id="numBtn4" className="numBtn">
-                <button className="calculBtn" value="7">7</button>
-                <button className="calculBtn" value="8">8</button>
-                <button className="calculBtn" value="9">9</button>
-                <button className="calculBtn" value="%"><i className="fa-solid fa-divide"></i></button>
+                <button onClick={() => handleClick("7")} className="calculBtn">7</button>
+                <button onClick={() => handleClick("8")} className="calculBtn">8</button>
+                <button onClick={() => handleClick("9")} className="calculBtn">9</button>
+                <button onClick={() => handleClick("/")} className="calculBtn">÷</button>
             </section>
             <section id="numBtn3" className="numBtn">
-                <button className="calculBtn" value="4">4</button>
-                <button className="calculBtn" value="5">5</button>
-                <button className="calculBtn" value="6">6</button>
-                <button className="calculBtn" value="*"><i className="fa-solid fa-xmark"></i></button>
+                <button onClick={() => handleClick("4")} className="calculBtn">4</button>
+                <button onClick={() => handleClick("5")} className="calculBtn">5</button>
+                <button onClick={() => handleClick("6")} className="calculBtn">6</button>
+                <button onClick={() => handleClick("*")} className="calculBtn">×</button>
             </section>
             <section id="numBtn2" className="numBtn">
-                <button className="calculBtn" value="1">1</button>
-                <button className="calculBtn" value="2">2</button>
-                <button className="calculBtn" value="3">3</button>
-                <button className="calculBtn" value="-"><i className="fa-solid fa-minus"></i></button>
+                <button onClick={() => handleClick("1")} className="calculBtn">1</button>
+                <button onClick={() => handleClick("2")} className="calculBtn">2</button>
+                <button onClick={() => handleClick("3")} className="calculBtn">3</button>
+                <button onClick={() => handleClick("-")} className="calculBtn">-</button>
             </section>
             <section id="numBtn1" className="numBtn">
-                <button className="calculBtn" value="."><i>.</i></button>
-                <button className="calculBtn" value="0">0</button>
-                <button className="calculBtn" value="="><i className="fa-solid fa-equals"></i></button>
-                <button className="calculBtn" value="+"><i className="fa-solid fa-plus"></i></button>
+                <button onClick={() => handleClick(".")} className="calculBtn">.</button>
+                <button onClick={() => handleClick("0")} className="calculBtn">0</button>
+                <button onClick={() => handleClick("=")} className="calculBtn">=</button>
+                <button onClick={() => handleClick("+")} className="calculBtn">+</button>
             </section>
         </div>
     );

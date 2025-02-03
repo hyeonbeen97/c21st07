@@ -1,7 +1,8 @@
+
 import React from "react";
 import './App.css';
-import { Canvas, CanvasBtn } from './jsx/canvas';
-import { Graph, GraphBtn } from './jsx/graph';
+import { MainCanvas, GraphContainer } from './jsx/canvas';
+import { } from './jsx/graph';
 import { Calculator } from './jsx/calculator';
 
 
@@ -12,12 +13,10 @@ function App() {
       <div id="container" className="container">
         <div id="canvasArea" className="canvasArea">
           <section className="csvsect">
-            <Canvas ></Canvas>
-            <CanvasBtn></CanvasBtn>
+            <MainCanvas></MainCanvas>
           </section>
           <section className="graphsect">
-            <Graph></Graph>
-            <GraphBtn></GraphBtn>
+            <GraphContainer></GraphContainer>
           </section>
         </div>
         <div id="calculatorArea" className="calculatorArea">
