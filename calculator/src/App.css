@@ -1,5 +1,6 @@
 @charset "UTF-8";
 * {
+  cursor: none;
   padding: 0;
   margin: 0;
   font-family: "Nanum Gothic", serif;
@@ -9,17 +10,36 @@
   color: rgb(199, 195, 185);
 }
 
+:root {
+  --black: #000000;
+  --grey1: #a3a3a3;
+  --grey2: #383838;
+  --white: #ffffff;
+  --green: #62Ba9B;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox  */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
 body {
-  background-color: #4a4545;
+  background: #4d4949;
 }
 body .container {
   display: flex;
   justify-content: space-between;
   border-radius: 30px;
   background-color: #4a4545;
-  margin: 70px auto 0 auto;
+  margin: 30px auto 0 auto;
   width: 1700px;
-  height: 850px;
+  height: 900px;
   box-sizing: border-box;
   padding: 50px;
 }
@@ -45,7 +65,7 @@ body .container .canvasArea .graphsect .graph::-webkit-scrollbar {
 body .container .canvasArea .graphsect .graph {
   box-sizing: border-box;
   border-radius: 30px;
-  height: 500px;
+  height: 600px;
   border-radius: 30px;
   background: #4a4545;
   box-shadow: inset -7px -7px 37px #363232, inset 7px 7px 37px #363232;
@@ -60,7 +80,7 @@ body .container .canvasArea .graphsect .graph .equationbox5,
 body .container .canvasArea .graphsect .graph .equationbox6,
 body .container .canvasArea .graphsect .graph .equationbox7 {
   text-align: left;
-  height: 120px;
+  height: 140px;
   background: linear-gradient(145deg, #4f4a4a, #4f4a4a);
   box-shadow: 7px 7px 24px #3b3838, -7px -7px 24px #645d5d;
   border-radius: 15px;
@@ -69,6 +89,16 @@ body .container .canvasArea .graphsect .graph .equationbox7 {
   margin-top: 20px;
   display: none;
   /* 선택된 방정식만 보이게 함 */
+}
+body .container .canvasArea .graphsect .graph .equationbox1 i,
+body .container .canvasArea .graphsect .graph .equationbox2 i,
+body .container .canvasArea .graphsect .graph .equationbox3 i,
+body .container .canvasArea .graphsect .graph .equationbox4 i,
+body .container .canvasArea .graphsect .graph .equationbox5 i,
+body .container .canvasArea .graphsect .graph .equationbox6 i,
+body .container .canvasArea .graphsect .graph .equationbox7 i {
+  color: var(--green);
+  filter: drop-shadow(0 0 5px #136146) drop-shadow(0 0 20px #000000);
 }
 body .container .canvasArea .graphsect .graph .equationbox1.visible,
 body .container .canvasArea .graphsect .graph .equationbox2.visible,
@@ -86,8 +116,8 @@ body .container .canvasArea .graphsect .graph .equationbox4 h2,
 body .container .canvasArea .graphsect .graph .equationbox5 h2,
 body .container .canvasArea .graphsect .graph .equationbox6 h2,
 body .container .canvasArea .graphsect .graph .equationbox7 h2 {
-  font-size: 16px;
-  color: #e07903;
+  font-size: 20px;
+  color: var(--green);
 }
 body .container .canvasArea .graphsect .graph .equationbox1 .equation,
 body .container .canvasArea .graphsect .graph .equationbox2 .equation,
@@ -96,8 +126,9 @@ body .container .canvasArea .graphsect .graph .equationbox4 .equation,
 body .container .canvasArea .graphsect .graph .equationbox5 .equation,
 body .container .canvasArea .graphsect .graph .equationbox6 .equation,
 body .container .canvasArea .graphsect .graph .equationbox7 .equation {
+  font-size: 20px;
   margin-top: 5px;
-  margin-left: 20px;
+  margin-left: 2px;
   color: #fff;
 }
 body .container .canvasArea .graphsect .graph .equationbox1 input,
@@ -107,10 +138,23 @@ body .container .canvasArea .graphsect .graph .equationbox4 input,
 body .container .canvasArea .graphsect .graph .equationbox5 input,
 body .container .canvasArea .graphsect .graph .equationbox6 input,
 body .container .canvasArea .graphsect .graph .equationbox7 input {
-  width: 30px;
-  height: 30px;
+  text-align: center;
+  font-size: 18px;
+  width: 40px;
+  height: 40px;
   margin: 0 5px;
   border-radius: 10px;
+  color: #000000;
+}
+body .container .canvasArea .graphsect .graph .equationbox1 input i,
+body .container .canvasArea .graphsect .graph .equationbox2 input i,
+body .container .canvasArea .graphsect .graph .equationbox3 input i,
+body .container .canvasArea .graphsect .graph .equationbox4 input i,
+body .container .canvasArea .graphsect .graph .equationbox5 input i,
+body .container .canvasArea .graphsect .graph .equationbox6 input i,
+body .container .canvasArea .graphsect .graph .equationbox7 input i {
+  color: var(--green);
+  filter: drop-shadow(0 0 5px var(--green)) drop-shadow(0 0 20px #000000);
 }
 body .container .canvasArea .graphsect .graph .equationbox1 .equationInbox,
 body .container .canvasArea .graphsect .graph .equationbox2 .equationInbox,
@@ -120,7 +164,6 @@ body .container .canvasArea .graphsect .graph .equationbox5 .equationInbox,
 body .container .canvasArea .graphsect .graph .equationbox6 .equationInbox,
 body .container .canvasArea .graphsect .graph .equationbox7 .equationInbox {
   margin-top: 10px;
-  margin-left: 20px;
 }
 body .container .canvasArea .graphsect .graph .equationbox1 .draw,
 body .container .canvasArea .graphsect .graph .equationbox2 .draw,
@@ -131,48 +174,29 @@ body .container .canvasArea .graphsect .graph .equationbox6 .draw,
 body .container .canvasArea .graphsect .graph .equationbox7 .draw {
   width: 50px;
   height: 50px;
-  margin-top: -90px;
+  margin-top: -50px;
   background: #696464;
   box-shadow: 7px 7px 24px #383434, -7px -7px 24px #645d5d;
   border-radius: 15px;
   float: right;
-}
-body .container .canvasArea .graphsect .graph .equationbox1 .draw i,
-body .container .canvasArea .graphsect .graph .equationbox2 .draw i,
-body .container .canvasArea .graphsect .graph .equationbox3 .draw i,
-body .container .canvasArea .graphsect .graph .equationbox4 .draw i,
-body .container .canvasArea .graphsect .graph .equationbox5 .draw i,
-body .container .canvasArea .graphsect .graph .equationbox6 .draw i,
-body .container .canvasArea .graphsect .graph .equationbox7 .draw i {
-  color: #51df0f;
-}
-body .container .canvasArea .graphsect .graph .equationbox1 #drawDelet,
-body .container .canvasArea .graphsect .graph .equationbox2 #drawDelet,
-body .container .canvasArea .graphsect .graph .equationbox3 #drawDelet,
-body .container .canvasArea .graphsect .graph .equationbox4 #drawDelet,
-body .container .canvasArea .graphsect .graph .equationbox5 #drawDelet,
-body .container .canvasArea .graphsect .graph .equationbox6 #drawDelet,
-body .container .canvasArea .graphsect .graph .equationbox7 #drawDelet {
-  width: 50px;
-  height: 50px;
-  margin-top: -34px;
-  background: #696464;
-  box-shadow: 7px 7px 24px #383434, -7px -7px 24px #645d5d;
-  border-radius: 15px;
-  float: right;
-}
-body .container .canvasArea .graphsect .graph .equationbox1 #drawDelet i,
-body .container .canvasArea .graphsect .graph .equationbox2 #drawDelet i,
-body .container .canvasArea .graphsect .graph .equationbox3 #drawDelet i,
-body .container .canvasArea .graphsect .graph .equationbox4 #drawDelet i,
-body .container .canvasArea .graphsect .graph .equationbox5 #drawDelet i,
-body .container .canvasArea .graphsect .graph .equationbox6 #drawDelet i,
-body .container .canvasArea .graphsect .graph .equationbox7 #drawDelet i {
-  color: #f80f0f;
 }
 body .container .canvasArea .graphsect .graph .equationbox3,
 body .container .canvasArea .graphsect .graph .equationbox4 {
-  height: 160px;
+  height: 230px;
+}
+body .container .canvasArea .graphsect .graph .equationbox3 .eqboxin,
+body .container .canvasArea .graphsect .graph .equationbox4 .eqboxin {
+  margin: 5px 5px;
+}
+body .container .canvasArea .graphsect .graph .equationbox3 .draw,
+body .container .canvasArea .graphsect .graph .equationbox4 .draw {
+  width: 50px;
+  height: 50px;
+  margin-top: -55px;
+  background: #696464;
+  box-shadow: 7px 7px 24px #383434, -7px -7px 24px #645d5d;
+  border-radius: 15px;
+  float: right;
 }
 body .container .canvasArea .graphsect .graphBtn {
   display: flex;
@@ -184,12 +208,11 @@ body .container .canvasArea .graphsect .graphBtn button {
   box-sizing: border-box;
   width: 120px;
   height: 40px;
-  border-radius: 30px;
-  border: 1px solid #484747;
   margin: 10px 0;
   border-radius: 30px;
-  background: linear-gradient(145deg, #4f4a4a, #433e3e);
-  box-shadow: 7px 7px 24px #302d2d, -7px -7px 24px #645d5d;
+  background: #4a4545;
+  box-shadow: inset -7px -7px 37px #363232, inset 7px 7px 37px #363232;
+  border-radius: 7px;
 }
 body .container .canvasArea .graphsect .graphBtn button:active {
   transition: 0.1s;
@@ -207,14 +230,9 @@ body .container .canvasArea .cvsBtn {
   font-style: normal;
   font-size: 15px;
 }
-body .container .canvasArea .cvsBtn .graphHistory {
-  width: 250px;
-  height: 230px;
-  background-color: #fff;
-  border-radius: 30px;
-}
 body .container .canvasArea .cvsBtn .scaleController {
-  width: 100%;
+  margin-top: 80px;
+  width: 50%;
   display: flex;
 }
 body .container .canvasArea .cvsBtn .scaleController .scaleBtn {
@@ -230,6 +248,10 @@ body .container .canvasArea .cvsBtn .scaleController .scaleBtn {
   border-radius: 30px;
   background: linear-gradient(145deg, #4f4a4a, #433e3e);
   box-shadow: 7px 7px 24px #302d2d, -7px -7px 24px #645d5d;
+}
+body .container .canvasArea .cvsBtn .scaleController .scaleBtn i {
+  color: var(--green);
+  filter: drop-shadow(0 0 5px var(--green)) drop-shadow(0 0 20px var(--green));
 }
 body .container .canvasArea .cvsBtn .scaleController input {
   box-sizing: border-box;
@@ -258,6 +280,10 @@ body .container .canvasArea .cvsBtn .controller .fLine .ctrBtn {
   box-shadow: inset -7px -7px 37px #363232, inset 7px 7px 37px #363232;
   border-radius: 7px;
 }
+body .container .canvasArea .cvsBtn .controller .fLine .ctrBtn i {
+  color: var(--green);
+  filter: drop-shadow(0 0 5px var(--green)) drop-shadow(0 0 20px #000000);
+}
 body .container .canvasArea .cvsBtn .controller .sLine .ctrBtn {
   width: 60px;
   height: 40px;
@@ -266,6 +292,10 @@ body .container .canvasArea .cvsBtn .controller .sLine .ctrBtn {
   background: #4a4545;
   box-shadow: inset -7px -7px 37px #363232, inset 7px 7px 37px #363232;
   border-radius: 7px;
+}
+body .container .canvasArea .cvsBtn .controller .sLine .ctrBtn i {
+  color: var(--green);
+  filter: drop-shadow(0 0 5px var(--green)) drop-shadow(0 0 20px #000000);
 }
 body .container .calculatorArea {
   width: 30%;
@@ -283,7 +313,7 @@ body .container .calculatorArea .calculator .numView {
   height: 100px;
   background-color: #3f3c3c;
   margin: 30px auto;
-  border-radius: 20px;
+  border-radius: 20px 20px 0px 0px;
   box-shadow: inset 10px 10px 10px #363232;
   box-sizing: border-box;
   padding: 30px;
@@ -294,6 +324,8 @@ body .container .calculatorArea .calculator .numView p {
   text-align: right;
   line-height: 50px;
   font-size: 55px;
+  color: var(--green);
+  filter: drop-shadow(0 0 3px var(--green)) drop-shadow(0 0 30px var(--green));
 }
 body .container .calculatorArea .calculator .numView::-webkit-scrollbar {
   width: 10px;
@@ -331,4 +363,16 @@ body .container .calculatorArea .calculator .numBtn button:active {
   transition: 0.1s;
   background: l #4d4949;
   box-shadow: -25px -25px 51px #494444, 25px 25px 51px #4b4646;
+}
+
+.small {
+  height: 10px;
+  width: 10px;
+  background-color: var(--green);
+  border-radius: 10px;
+  filter: drop-shadow(0 0 5px var(--green)) drop-shadow(0 0 20px var(--green));
+  position: fixed;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: height 0.2s, width 0.2s;
 }/*# sourceMappingURL=App.css.map */

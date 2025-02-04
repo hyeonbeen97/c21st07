@@ -1,13 +1,39 @@
 * {
+    cursor: none;
     padding: 0;
     margin: 0;
-    font-family: "Nanum Gothic", serif;
+    font-family: "Nanum Gothic",
+        serif;
     font-weight: 400;
     font-style: normal;
     font-weight: bold;
     color: rgb(199, 195, 185);
 
 
+}
+
+:root {
+    --black: #000000;
+    --grey1: #a3a3a3;
+    --grey2: #383838;
+    --white: #ffffff;
+    --green: #62Ba9B;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox  */
+input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+@mixin fillter {
+    color: var(--green);
+    filter: drop-shadow(0 0 5px var(--green)) drop-shadow(0 0 20px #000000);
 }
 
 @mixin newMopin {
@@ -32,16 +58,17 @@
 }
 
 body {
-    background-color: #4a4545;
+    background: #4d4949;
+
 
     .container {
         display: flex;
         justify-content: space-between;
         border-radius: 30px;
         background-color: #4a4545;
-        margin: 70px auto 0 auto;
+        margin: 30px auto 0 auto;
         width: 1700px;
-        height: 850px;
+        height: 900px;
         box-sizing: border-box;
         padding: 50px;
 
@@ -67,18 +94,13 @@ body {
                     width: 10px;
                 }
 
-
-
                 .graph {
                     box-sizing: border-box;
                     border-radius: 30px;
-                    height: 500px;
+                    height: 600px;
                     @include newMopin;
                     padding: 30px;
                     overflow-y: scroll;
-
-
-
 
                     .equationbox1,
                     .equationbox2,
@@ -88,14 +110,20 @@ body {
                     .equationbox6,
                     .equationbox7 {
                         text-align: left;
-                        height: 120px;
+                        height: 140px;
                         background: linear-gradient(145deg, #4f4a4a, #4f4a4a);
                         box-shadow: 7px 7px 24px #3b3838, -7px -7px 24px #645d5d;
                         border-radius: 15px;
                         padding: 10px;
                         box-sizing: border-box;
+
                         margin-top: 20px;
                         display: none;
+
+                        i {
+                            color: var(--green);
+                            filter: drop-shadow(0 0 5px #136146) drop-shadow(0 0 20px #000000);
+                        }
 
                         /* 선택된 방정식만 보이게 함 */
                         &.visible {
@@ -103,60 +131,71 @@ body {
                         }
 
                         h2 {
-                            font-size: 16px;
-                            color: #e07903;
+                            font-size: 20px;
+                            color: var(--green);
                         }
 
                         .equation {
+                            font-size: 20px;
                             margin-top: 5px;
-                            margin-left: 20px;
+                            margin-left: 2px;
                             color: #fff;
+
                         }
 
                         input {
-                            width: 30px;
-                            height: 30px;
+                            text-align: center;
+                            font-size: 18px;
+                            width: 40px;
+                            height: 40px;
                             margin: 0 5px;
                             border-radius: 10px;
+                            color: #000000;
+
+                            i {
+                                @include fillter()
+                            }
                         }
 
                         .equationInbox {
                             margin-top: 10px;
-                            margin-left: 20px;
                         }
 
                         .draw {
                             width: 50px;
                             height: 50px;
-                            margin-top: -90px;
+                            margin-top: -50px;
                             background: #696464;
                             box-shadow: 7px 7px 24px #383434, -7px -7px 24px #645d5d;
                             border-radius: 15px;
                             float: right;
 
-                            i {
-                                color: #51df0f;
-                            }
+
                         }
 
-                        #drawDelet {
-                            width: 50px;
-                            height: 50px;
-                            margin-top: -34px;
-                            background: #696464;
-                            box-shadow: 7px 7px 24px #383434, -7px -7px 24px #645d5d;
-                            border-radius: 15px;
-                            float: right;
 
-                            i {
-                                color: #f80f0f;
-                            }
-                        }
                     }
 
                     .equationbox3,
                     .equationbox4 {
-                        height: 160px;
+                        height: 230px;
+
+                        .eqboxin {
+                            margin: 5px 5px;
+                        }
+
+                        .draw {
+                            width: 50px;
+                            height: 50px;
+                            margin-top: -55px;
+                            background: #696464;
+                            box-shadow: 7px 7px 24px #383434, -7px -7px 24px #645d5d;
+                            border-radius: 15px;
+                            float: right;
+
+
+                        }
+
                     }
                 }
 
@@ -171,10 +210,11 @@ body {
                         box-sizing: border-box;
                         width: 120px;
                         height: 40px;
-                        border-radius: 30px;
-                        border: 1px solid #484747;
                         margin: 10px 0;
-                        @include newMopout;
+                        @include newMopin;
+                        border-radius: 7px;
+
+
                     }
 
                     button:active {
@@ -183,8 +223,6 @@ body {
                 }
 
             }
-
-
 
 
 
@@ -199,16 +237,10 @@ body {
                 font-style: normal;
                 font-size: 15px;
 
-                .graphHistory {
-                    width: 250px;
-                    height: 230px;
-                    background-color: #fff;
-                    border-radius: 30px;
-                }
-
 
                 .scaleController {
-                    width: 100%;
+                    margin-top: 80px;
+                    width: 50%;
                     display: flex;
 
                     .scaleBtn {
@@ -222,6 +254,12 @@ body {
                         margin-top: -20px;
                         border: 1px solid #484747;
                         @include newMopout;
+
+                        i {
+                            color: var(--green);
+                            filter: drop-shadow(0 0 5px var(--green)) drop-shadow(0 0 20px var(--green));
+
+                        }
                     }
 
 
@@ -254,6 +292,10 @@ body {
                             margin: 0 59px;
                             @include newMopin;
                             border-radius: 7px;
+
+                            i {
+                                @include fillter
+                            }
                         }
                     }
 
@@ -265,9 +307,9 @@ body {
                             @include newMopin;
                             border-radius: 7px;
 
-
-
-
+                            i {
+                                @include fillter
+                            }
                         }
                     }
 
@@ -289,7 +331,7 @@ body {
                     height: 100px;
                     background-color: #3f3c3c;
                     margin: 30px auto;
-                    border-radius: 20px;
+                    border-radius: 20px 20px 0px 0px;
                     box-shadow: inset 10px 10px 10px #363232;
                     box-sizing: border-box;
                     padding: 30px;
@@ -300,6 +342,9 @@ body {
                         text-align: right;
                         line-height: 50px;
                         font-size: 55px;
+                        color: var(--green);
+                        filter: drop-shadow(0 0 3px var(--green)) drop-shadow(0 0 30px var(--green));
+
 
                     }
 
@@ -355,4 +400,17 @@ body {
 
 
 
+}
+
+
+.small {
+    height: 10px;
+    width: 10px;
+    background-color: var(--green);
+    border-radius: 10px;
+    filter: drop-shadow(0 0 5px var(--green)) drop-shadow(0 0 20px var(--green));
+    position: fixed;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: height 0.2s, width 0.2s;
 }

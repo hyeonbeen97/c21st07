@@ -11,12 +11,12 @@ function Calculator() {
         } else if (value === "⌫") {
             setInput(input.slice(0, -1));
         } else if (value === "sin") {
-            setInput(Math.sin(input).toString());
+            setInput(Math.sin(input).toFixed(2).toString());
         } else if (value === "tan") {
-            setInput(Math.tan(input).toString());
+            setInput(Math.tan(input).toFixed(2).toString());
 
         } else if (value === "cos") {
-            setInput(Math.cos(input).toString());
+            setInput(Math.cos(input).toFixed(2).toString());
 
         } else if (value === "root") {
             setInput(Math.sqrt(input));
@@ -30,9 +30,10 @@ function Calculator() {
 
     const handleCalculate = () => {
         try {
-            setInput(eval(input).toString()); // 보안 문제를 고려하여 Function 생성자로 변경 가능
+            const result = eval(input);
+            setInput(Number.isInteger(result) ? result.toString() : result.toFixed(2));
         } catch (error) {
-            setInput("Error");
+            setInput("에러 입니둥");
         }
     };
 
