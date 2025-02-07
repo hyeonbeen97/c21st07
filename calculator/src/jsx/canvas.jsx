@@ -3,20 +3,15 @@ import React, { useEffect, useState } from "react";
 
 function Canvas({ scaleFactor, offsetX, offsetY, equations }) {
     useEffect(() => {
-        var cursorSmall = document.querySelector('.small');
+        let cursorSmall = document.querySelector('.small');
 
 
         document.addEventListener('mousemove', function (e) {
-            var x = e.clientX;
-            var y = e.clientY;
+            let x = e.clientX;
+            let y = e.clientY;
             cursorSmall.style.left = x + 'px';
             cursorSmall.style.top = y + 'px';
         });
-
-
-
-
-
 
         const colors = ["yellowgreen", "yellow", "pink", "purple", "orange", "aqua", "white"]
         const canvas = document.getElementById("canvas");
@@ -56,7 +51,6 @@ function Canvas({ scaleFactor, offsetX, offsetY, equations }) {
             pen.fillStyle = colors[index % colors.length];
             pen.beginPath();
             //  원 그리기
-
             if (type === "circle") {
                 const { a, b, r } = eqFunc;
                 const step = Math.PI / 180;
@@ -72,7 +66,7 @@ function Canvas({ scaleFactor, offsetX, offsetY, equations }) {
                 }
             } else if (typeof eqFunc === "function") {
                 //  방정식 r그리기
-                for (let x = -canvas.width / 2; x <= canvas.width / 2; x += 0.1) {
+                for (let x = -canvas.width; x <= canvas.width; x += 0.1) {
                     const xValue = x / scaleFactor;
                     const graphX = centerX + x;
                     const graphY = centerY - eqFunc(xValue) * scaleFactor;
@@ -86,22 +80,27 @@ function Canvas({ scaleFactor, offsetX, offsetY, equations }) {
     return <canvas id="canvas" className="canvas" width="500" height="500"></canvas>;
 }
 
-function CanvasBtn({ canvasIncrease, canvasDecrease, canvasReset, canvasMove, canvasArrowReset }) {
+function CanvasBtn({ canvasIncrease, canvasDecrease, canvasReset, canvasMove, canvasArrowReset, scaleFactor }) {
     return (
         <div id="cvsBtn" className="cvsBtn">
-            <div className="graphHistory"></div>
             <div id="scalecontroller" className="scaleController">
+                <span className="Scale">Scale Controller</span>
+                <span className="Scale2">{scaleFactor}</span>
                 <button className="scaleBtn" onClick={canvasIncrease}>
                     <i className="fa-solid fa-plus"></i>
+                </button>
+
+                <button className="scaleBtn" onClick={canvasReset}>
+                    <i className="fa-solid fa-arrows-rotate"></i>
+
                 </button>
                 <button className="scaleBtn" onClick={canvasDecrease}>
                     <i className="fa-solid fa-minus"></i>
                 </button>
-                <button className="scaleBtn" onClick={canvasReset}>
-                    <i className="fa-solid fa-arrows-rotate"></i>
-                </button>
             </div>
             <div id="controller" className="controller">
+                <span className="Arrowkeys">Move Controller</span>
+
                 <article className="fLine">
                     <button className="ctrBtn" id="arrowKeysU" onClick={() => canvasMove("up")}>
                         <i className="fa-solid fa-arrow-up"></i>
@@ -123,7 +122,6 @@ function CanvasBtn({ canvasIncrease, canvasDecrease, canvasReset, canvasMove, ca
                     <button className="ctrBtn" id="arrowKeysD" onClick={() => canvasMove("down")}>
                         <i className="fa-solid fa-arrow-down"></i>
                     </button>
-
                 </article>
             </div>
         </div>
@@ -178,7 +176,7 @@ function Graph({ activeEquations, setEquations, }) {
         <div className="graph">
             {activeEquations.includes("eq1") && (
                 <div className="equationbox1 visible">
-                    <h2>1차 방정식</h2>
+                    <h2>Linear equation</h2>
                     <p className="equation">f(𝓧) = 𝒂𝓧 + 𝒃</p>
                     <div className="equationInbox">
                         𝒂 : <input type="number" className="equationInputA" id="equationInput1"></input>
@@ -186,7 +184,7 @@ function Graph({ activeEquations, setEquations, }) {
                     </div>
                     <button id="draw1" className="draw" onClick={
                         () => drawEquation("eq1")
-                    }><i className="fa-solid fa-pen"></i></button>
+                    }><i className="fa-solid fa-check"></i></button>
 
                 </div>
             )
@@ -195,14 +193,14 @@ function Graph({ activeEquations, setEquations, }) {
             {
                 activeEquations.includes("eq2") && (
                     <div className="equationbox2 visible">
-                        <h2>2차 방정식</h2>
+                        <h2>Quadratic equation</h2>
                         <p className="equation">f(𝓧) = 𝒂𝓧² + 𝒃𝓧 + 𝒄</p>
                         <div className="equationInbox">
                             𝒂 : <input type="number" id="equationInput3"></input>
                             𝒃 : <input type="number" id="equationInput4"></input>
                             𝒄 : <input type="number" id="equationInput5"></input>
                         </div>
-                        <button id="draw2" className="draw" onClick={() => drawEquation("eq2")}><i className="fa-solid fa-pen"></i></button>
+                        <button id="draw2" className="draw" onClick={() => drawEquation("eq2")}><i className="fa-solid fa-check"></i></button>
 
                     </div >
                 )
@@ -212,7 +210,7 @@ function Graph({ activeEquations, setEquations, }) {
             {
                 activeEquations.includes("eq3") && (
                     <div className="equationbox3 visible">
-                        <h2>3차 방정식</h2>
+                        <h2>Cubic equation</h2>
                         <p className="equation">f(𝓧) = 𝒂𝓧³ + 𝒃𝓧² + 𝒄𝓧 + 𝒅</p>
                         <div className="equationInbox">
                             𝒂 : <input type="number" id="equationInput6" className="eqboxin"></input>
@@ -221,7 +219,7 @@ function Graph({ activeEquations, setEquations, }) {
                             𝒄 : <input type="number" id="equationInput8" className="eqboxin"></input>
                             𝒅 : <input type="number" id="equationInput9" className="eqboxin"></input>
                         </div>
-                        <button id="draw3" className="draw" onClick={() => { drawEquation("eq3") }}><i className="fa-solid fa-pen"></i></button>
+                        <button id="draw3" className="draw" onClick={() => { drawEquation("eq3") }}><i className="fa-solid fa-check"></i></button>
 
                     </div >
                 )
@@ -231,7 +229,7 @@ function Graph({ activeEquations, setEquations, }) {
             {
                 activeEquations.includes("eq4") && (
                     <div className="equationbox4 visible">
-                        <h2>4차 방정식</h2>
+                        <h2>Quartic equation</h2>
                         <p className="equation">f(𝓧) = 𝒂𝓧⁴+ 𝒃𝓧³ + 𝒄𝓧² + 𝒅𝓧 + 𝒆</p>
                         <div className="equationInbox">
                             𝒂 : <input type="number" id="equationInput10" className="eqboxin"></input>
@@ -241,7 +239,7 @@ function Graph({ activeEquations, setEquations, }) {
                             𝒅 : <input type="number" id="equationInput13" className="eqboxin"></input>
                             𝒆 : <input type="number" id="equationInput14" className="eqboxin"></input>
                         </div>
-                        <button id="draw4" className="draw" onClick={() => { drawEquation("eq4") }}><i className="fa-solid fa-pen"></i></button>
+                        <button id="draw4" className="draw" onClick={() => { drawEquation("eq4") }}><i className="fa-solid fa-check"></i></button>
 
                     </div >
                 )
@@ -251,7 +249,7 @@ function Graph({ activeEquations, setEquations, }) {
             {
                 activeEquations.includes("circle") && (
                     <div className="equationbox7 visible">
-                        <h2>원 그리기</h2>
+                        <h2>Circle</h2>
                         <div className="equationInbox">
                             𝒂 : <input type="number" id="equationInput15"></input>
 
@@ -260,7 +258,7 @@ function Graph({ activeEquations, setEquations, }) {
                             r : <input type="number" id="equationInput17"></input>
 
                         </div>
-                        <button id="draw7" className="draw" onClick={() => { drawEquation("eq5") }}><i className="fa-solid fa-pen"></i></button>
+                        <button id="draw7" className="draw" onClick={() => { drawEquation("eq5") }}><i className="fa-solid fa-check"></i></button>
 
                     </div >
                 )
@@ -274,12 +272,12 @@ function GraphBtn({ toggleEquation, clear }) {
 
     return (
         <div className="graphBtn">
-            <button onClick={() => toggleEquation("eq1")}>1차 방정식</button>
-            <button onClick={() => toggleEquation("eq2")}>2차 방정식</button>
-            <button onClick={() => toggleEquation("eq3")}>3차 방정식</button>
-            <button onClick={() => toggleEquation("eq4")}>4차 방정식</button>
-            <button onClick={() => toggleEquation("circle")}>원 그리기</button>
-            <button onClick={clear}><i class="fa-solid fa-eraser">지우기</i></button>
+            <button onClick={() => toggleEquation("eq1")}>Linear</button>
+            <button onClick={() => toggleEquation("eq2")}>Quadratic</button>
+            <button onClick={() => toggleEquation("eq3")}>Cubic</button>
+            <button onClick={() => toggleEquation("eq4")}>Quartic</button>
+            <button onClick={() => toggleEquation("circle")}>Circle</button>
+            <button onClick={clear}><i className="fa-solid fa-eraser"></i></button>
         </div>
     );
 }
@@ -338,6 +336,7 @@ function MainCanvas() {
                     canvasReset={canvasReset}
                     canvasMove={canvasMove}
                     canvasArrowReset={canvasArrowReset}
+                    scaleFactor={scaleFactor}
                 />
             </section>
             <section className="graphsect">

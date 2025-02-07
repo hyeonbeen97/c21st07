@@ -1,5 +1,5 @@
 * {
-    cursor: none;
+    // cursor: none;
     padding: 0;
     margin: 0;
     font-family: "Nanum Gothic",
@@ -60,7 +60,6 @@ input[type='number'] {
 body {
     background: #4d4949;
 
-
     .container {
         display: flex;
         justify-content: space-between;
@@ -98,9 +97,11 @@ body {
                     box-sizing: border-box;
                     border-radius: 30px;
                     height: 600px;
-                    @include newMopin;
-                    padding: 30px;
+                    padding: 20px;
                     overflow-y: scroll;
+                    padding-top: 0;
+                    box-shadow: 7px 7px 24px #3b3838, -7px -7px 24px #4b4444;
+
 
                     .equationbox1,
                     .equationbox2,
@@ -112,9 +113,9 @@ body {
                         text-align: left;
                         height: 140px;
                         background: linear-gradient(145deg, #4f4a4a, #4f4a4a);
-                        box-shadow: 7px 7px 24px #3b3838, -7px -7px 24px #645d5d;
+                        box-shadow: 7px 7px 24px #3b3838, -7px -7px 24px #4b4444;
                         border-radius: 15px;
-                        padding: 10px;
+                        padding: 15px;
                         box-sizing: border-box;
 
                         margin-top: 20px;
@@ -133,19 +134,23 @@ body {
                         h2 {
                             font-size: 20px;
                             color: var(--green);
+                            text-shadow: 3px 3px 3px #1a291e;
+
                         }
 
                         .equation {
-                            font-size: 20px;
-                            margin-top: 5px;
+                            font-size: 15 px;
+                            margin-top: 10px;
                             margin-left: 2px;
                             color: #fff;
+                            text-shadow: 1px 2px 1px #131313;
+
 
                         }
 
                         input {
                             text-align: center;
-                            font-size: 18px;
+                            font-size: 14px;
                             width: 40px;
                             height: 40px;
                             margin: 0 5px;
@@ -153,7 +158,8 @@ body {
                             color: #000000;
 
                             i {
-                                @include fillter()
+                                @include fillter();
+
                             }
                         }
 
@@ -199,6 +205,18 @@ body {
                     }
                 }
 
+                .graph::-webkit-scrollbar {
+                    width: 10px;
+                    /* 스크롤 바 너비 */
+                }
+
+                .graph::-webkit-scrollbar-thumb {
+                    background: var(--green);
+                    /* 스크롤바 색상 */
+                    border-radius: 5px;
+                    /* 둥근 모서리 */
+                }
+
 
                 .graphBtn {
                     display: flex;
@@ -238,10 +256,31 @@ body {
                 font-size: 15px;
 
 
+
+
                 .scaleController {
+                    position: relative;
                     margin-top: 80px;
                     width: 50%;
                     display: flex;
+
+                    .Scale {
+                        position: absolute;
+                        top: -75px;
+                        left: 23px;
+                        font-size: 20px;
+                        height: 25px;
+                    }
+
+
+
+                    .Scale2 {
+                        position: absolute;
+                        top: 60px;
+                        left: 80px;
+                        font-size: 25px;
+                        height: 25px;
+                    }
 
                     .scaleBtn {
                         font-size: 25px;
@@ -274,16 +313,30 @@ body {
                         border: 1px solid #484747
                     }
 
-
-
                     button:active {
-                        @include newMoclick
+                        @include newMoclick;
+
+                        i {
+                            color: #302d2d;
+                            filter: none;
+                        }
                     }
                 }
 
                 .controller {
+
                     width: 40%;
-                    margin-top: 20px;
+                    margin-top: 50px;
+                    position: relative;
+
+                    .Arrowkeys {
+                        width: 240px;
+                        position: absolute;
+                        top: -48px;
+                        left: 15px;
+                        font-size: 20px;
+                        height: 25px;
+                    }
 
                     .fLine {
                         .ctrBtn {
@@ -295,6 +348,15 @@ body {
 
                             i {
                                 @include fillter
+                            }
+
+
+                        }
+
+                        .ctrBtn:active {
+                            i {
+                                color: #302d2d;
+                                filter: none;
                             }
                         }
                     }
@@ -308,13 +370,22 @@ body {
                             border-radius: 7px;
 
                             i {
-                                @include fillter
+                                @include fillter;
+                            }
+                        }
+
+                        .ctrBtn:active {
+                            i {
+                                color: #302d2d;
+                                filter: none;
                             }
                         }
                     }
 
                 }
             }
+
+
         }
 
         .calculatorArea {
@@ -325,82 +396,184 @@ body {
                 width: 500px;
                 height: 800px;
                 @include newMopout;
+            }
 
-                .numView {
-                    width: 90%;
-                    height: 100px;
-                    background-color: #3f3c3c;
-                    margin: 30px auto;
-                    border-radius: 20px 20px 0px 0px;
-                    box-shadow: inset 10px 10px 10px #363232;
-                    box-sizing: border-box;
-                    padding: 30px;
-                    overflow-x: scroll;
-                    overflow-y: hidden;
+            .radio-checked {
 
-                    p {
-                        text-align: right;
-                        line-height: 50px;
-                        font-size: 55px;
-                        color: var(--green);
-                        filter: drop-shadow(0 0 3px var(--green)) drop-shadow(0 0 30px var(--green));
+                &_input {
+                    display: none;
 
+                    &:checked+.radio-checked_label {
+                        &--on {
+                            color: #47cf73;
+                            text-shadow: 0 0 7px rgba(71, 207, 115, 0.6);
+                        }
 
+                        &--off {
+                            color: #ff3c41;
+                            text-shadow: 0 0 7px rgba(255, 60, 65, 0.6);
+                        }
+
+                        &:before {
+                            display: none;
+                        }
                     }
+                }
 
-                    &::-webkit-scrollbar {
-                        width: 10px;
-                        height: 10px;
+                &_label {
+                    cursor: pointer;
+                    display: inline-block;
+                    line-height: 1;
+                    border-radius: 3rem;
+                    margin-right: 15px;
+                    color: #acb2c0;
+                    transition: all 150ms ease-in-out;
 
+                    &:before {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        right: 0;
+                        bottom: 0;
+                        display: block;
                     }
+                }
 
-                    &::-webkit-scrollbar-track {
-                        @include newMopin()
-                    }
+                &_container {
+                    position: relative;
+                }
+
+                &_highlight {
+                    position: absolute;
+                    left: 0;
+                    bottom: 0;
+                    width: var(--pagination-width);
+                    height: 100%;
+                    border-radius: 70px;
+                    box-shadow: inset -5px -5px 10px 4px #fff, inset -2px 6px 8px 6px #d0d8e3;
+                    background: #eef3f7;
+                    transition: all 0.6s ease;
+                    transform: translateX(var(--highlight-left));
+                }
+            }
+
+            .tofixedbox {
+                margin: auto;
+                width: 450px;
+                height: 30px;
+                flex-wrap: nowrap;
+
+                .tofixed {
+                    float: right;
+                    width: 100px;
+                    height: 20px;
+                    accent-color: var(--green);
+                    filter: drop-shadow(0 0 3px var(--green)) drop-shadow(0 0 30px var(--green));
                 }
 
 
 
-                #numBtn6 {
-                    button {
-                        font-size: 15px;
-                    }
-
-                    .pi {
-                        font-size: 35px;
-                    }
-                }
-
-                .numBtn {
-                    width: 80%;
+                .fixedbox {
+                    float: right;
                     display: flex;
-                    margin: 35px auto;
-                    justify-content: space-between;
-                    font-size: 40px;
+                    height: 20px;
+                    font-size: 20px;
+                    margin-right: 10px;
+                }
+            }
 
-                    button {
-                        width: 70px;
-                        height: 70px;
-                        @include newMopout;
-                        border-radius: 50%;
-                        border: none;
-                        font-size: 25px;
 
-                    }
+            .numView {
+                width: 90%;
+                height: 100px;
+                background-color: #3f3c3c;
+                margin: 30px auto;
+                margin-bottom: 15px;
+                border-radius: 20px 20px 0px 0px;
+                box-shadow: inset 10px 10px 10px #363232;
+                box-sizing: border-box;
+                padding: 30px;
+                overflow-x: scroll;
+                overflow-y: hidden;
 
-                    button:active {
-                        @include newMoclick
-                    }
+                p {
+                    text-align: right;
+                    line-height: 50px;
+                    font-size: 55px;
+                    color: #62Ba9B;
+                    filter: drop-shadow(0 0 3px var(--green)) drop-shadow(0 0 20px var(--green));
+
+
+                }
+
+                &::-webkit-scrollbar {
+                    width: 10px;
+                    height: 10px;
+
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    width: 10px;
+                    height: 10px;
+                    color: var(--green);
+                    border-radius: 12px 12px 12px 12px;
+                }
+
+                &::-webkit-scrollbar-track {}
+            }
+
+            .numView::-webkit-scrollbar {
+                width: 4px;
+                /* 스크롤 바 너비 */
+            }
+
+            .numView::-webkit-scrollbar-thumb {
+                background: var(--green);
+                /* 스크롤바 색상 */
+                border-radius: 5px;
+                /* 둥근 모서리 */
+            }
+
+
+
+            #numBtn6 {
+                button {
+                    font-size: 15px;
+                }
+
+                .pi {
+                    font-size: 35px;
+                }
+            }
+
+            .numBtn {
+                width: 80%;
+                display: flex;
+                margin: 30px auto;
+                margin-top: 20px;
+                justify-content: space-between;
+                font-size: 40px;
+
+                button {
+                    width: 55px;
+                    height: 55px;
+                    @include newMopout;
+                    border-radius: 50%;
+                    border: none;
+                    font-size: 25px;
+
+                }
+
+                button:active {
+                    @include newMoclick
                 }
             }
         }
-
-
     }
 
 
-
 }
+
 
 
 .small {
@@ -413,4 +586,170 @@ body {
     pointer-events: none;
     transform: translate(-50%, -50%);
     transition: height 0.2s, width 0.2s;
+}
+
+@media (max-width: 800px) {
+    * {
+        cursor: none;
+        padding: 0;
+        margin: 0;
+        font-family: "Nanum Gothic", serif;
+        font-weight: 400;
+        font-style: normal;
+        font-weight: bold;
+        color: rgb(199, 195, 185);
+    }
+
+    :root {
+        --black: #000000;
+        --grey1: #a3a3a3;
+        --grey2: #383838;
+        --white: #ffffff;
+        --green: #62Ba9B;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type='number'] {
+        -moz-appearance: textfield;
+    }
+
+    body {
+        background: #4d4949;
+
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 1700px;
+        height: 3000px !important;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .canvasArea {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: auto;
+    }
+
+    .csvsect,
+    .graphsect {
+        width: 100%;
+        max-width: 600px;
+        margin: 10px 0;
+    }
+
+    .graph {
+        width: 100%;
+        max-height: 600px;
+        overflow-y: auto;
+    }
+
+    .graphBtn {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .graphBtn button {
+        width: 100px;
+        margin: 5px;
+    }
+
+    .cvsBtn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 600px;
+        margin-bottom: 50px;
+    }
+
+    .scaleController {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .scaleBtn {
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+    }
+
+    .calculatorArea {
+        width: 100%;
+        max-width: 500px;
+        margin: auto;
+    }
+
+    .calculator {
+        width: 100%;
+        max-width: 600px;
+        padding: 20px;
+
+
+    }
+
+
+
+    .numView {
+        width: 100%;
+        height: 80px;
+        overflow-x: auto;
+    }
+
+    .numBtn {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+    }
+
+    .numBtn button {
+        width: 60px;
+        height: 60px;
+        font-size: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .container {
+            flex-direction: column;
+            padding: 10px;
+        }
+
+        .canvasArea,
+        .calculatorArea {
+            width: 100%;
+            max-width: none;
+        }
+
+        .calculator {
+            width: 100%;
+            max-width: none;
+        }
+
+        .numBtn {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .numBtn button {
+            width: 50px;
+            height: 50px;
+            font-size: 18px;
+        }
+    }
+
 }
